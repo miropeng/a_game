@@ -4,7 +4,7 @@ package
 
 	public class Config
 	{
-		public static const G:Number = 3;
+		public static const G:Number = 4;
 		public static const CHASE_MIN_V:int = 3;
 		public static const HEOR_START_X:int = 20;
 		public static const CHASE_GAP:int = 10;
