@@ -17,7 +17,7 @@ package com.miro.rt.obj
 	/**
 	 * @author Aymeric
 	 */
-	public class HillsTexture extends Sprite {
+	public class RainbowDrawer extends Sprite {
 		
 		[Embed(source="/../embed/g0.png")]
 		private var Ground:Class;
@@ -35,7 +35,7 @@ package com.miro.rt.obj
 		
 		private var _textureIndex:int = 0;
 		
-		public function HillsTexture() {
+		public function RainbowDrawer() {
 			
 		}
 		

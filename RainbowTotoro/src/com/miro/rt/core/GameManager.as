@@ -13,7 +13,7 @@ package com.miro.rt.core  {
 	import com.miro.rt.obj.Monster;
 	import com.miro.rt.obj.Totoro;
 	import com.miro.rt.obj.Rainbow;
-	import com.miro.rt.obj.HillsTexture;
+	import com.miro.rt.obj.RainbowDrawer;
 	import com.miro.rt.data.Config;
 
 	/**
@@ -33,7 +33,7 @@ package com.miro.rt.core  {
 		private var _hill:Rainbow;
 		private var _back:Backgroud;
 		
-		private var _hillsTexture:HillsTexture;
+		private var _hillsTexture:RainbowDrawer;
 		private var _heroView:DisplayObject;
 		private var _mView:DisplayObject;
 		public var isStart:Boolean;
@@ -63,7 +63,7 @@ package com.miro.rt.core  {
 			_back = new Backgroud();
 			_heroView = new HeroView();
 			_mView = new MView();
-			_hillsTexture = new HillsTexture();
+			_hillsTexture = new RainbowDrawer();
 //			
 			
 			_ball = new Totoro("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1, view: _heroView});

@@ -20,14 +20,14 @@ package com.miro.rt.obj
 		override protected function _prepareSlices():void {
 			
 			if (view)
-				(view as HillsTexture).init(sliceWidth, sliceHeight);
+				(view as RainbowDrawer).init(sliceWidth, sliceHeight);
 			
 			super._prepareSlices();
 		}
 		
 		override protected function _pushHill():void {
 			if (view)
-				(view as HillsTexture).createSlice(body, _nextYPoint * _box2D.scale, _currentYPoint * _box2D.scale);
+				(view as RainbowDrawer).createSlice(body, _nextYPoint * _box2D.scale, _currentYPoint * _box2D.scale);
 			
 			super._pushHill();
 		}
@@ -35,7 +35,7 @@ package com.miro.rt.obj
 		override protected function _deleteHill(index:uint):void {
 			
 			if(view)
-				(view as HillsTexture).deleteHill(index);
+				(view as RainbowDrawer).deleteHill(index);
 			
 			super._deleteHill(index);
 		}
