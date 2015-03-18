@@ -1,7 +1,6 @@
 package games.tinywings.box2d {
 
 	import Box2D.Common.Math.b2Vec2;
-	import Box2D.Dynamics.b2Body;
 	
 	import citrus.objects.platformer.box2d.Hero;
 	import citrus.physics.PhysicsCollisionCategories;
