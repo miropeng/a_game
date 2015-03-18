@@ -49,7 +49,11 @@ package games.tinywings.box2d
 		
 		public function update():void 
 		{
-			if(state.ball.x * Config.BACK0_MOVE_RATE >= (_clipSkyIdx + 1) * _clipWidth)
+			var outOfStage:Boolean = false;
+			var outOffX:Number = 100;
+			
+			outOfStage = state.ball.x * Config.BACK0_MOVE_RATE >= (_clipSkyIdx + 1) * _clipWidth + outOffX;
+			if(outOfStage)
 			{
 				if(_clipSkyIdx % 2 == 0)
 				{
@@ -62,7 +66,8 @@ package games.tinywings.box2d
 				_clipSkyIdx++;
 			}
 			
-			if(state.ball.x * Config.BACK1_MOVE_RATE >= (_clipGroundIdx + 1) * _clipWidth)
+			outOfStage = state.ball.x * Config.BACK1_MOVE_RATE >= (_clipGroundIdx + 1) * _clipWidth + outOffX;
+			if(outOfStage)
 			{
 				if(_clipGroundIdx % 2 == 0)
 				{

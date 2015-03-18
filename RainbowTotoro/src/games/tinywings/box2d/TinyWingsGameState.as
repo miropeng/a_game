@@ -47,7 +47,7 @@ package games.tinywings.box2d {
 			super.initialize();
 
 			_box2D = new Box2D("box2d");
-			_box2D.gravity = new b2Vec2(0, 4);
+			_box2D.gravity = new b2Vec2(0, Config.G);
 			add(_box2D);
 			
 			touchInput = new TouchInput();
@@ -58,9 +58,9 @@ package games.tinywings.box2d {
 			_heroView = new HeroView();
 			_mView = new MView();
 			_hillsTexture = new HillsTexture();
+//			
 			
-			
-			_ball = new Ball("hero", {radius:0.3, hurtVelocityX:5, hurtVelocityY:8, group:1, view: _heroView});
+			_ball = new Ball("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1, view: _heroView});
 			_ball.x = Config.HEOR_START_X * _box2D.scale;
 			_ball.y = -10 * _box2D.scale;
 			add(_ball);
