@@ -1,4 +1,4 @@
-package  {
+package com.miro.rt.core  {
 
 	import citrus.core.CitrusEngine;
 	import citrus.core.starling.StarlingCitrusEngine;

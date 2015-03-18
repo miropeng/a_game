@@ -1,8 +1,10 @@
-package games.tinywings.box2d
+package com.miro.rt.obj 
 {
 	import flash.display.Bitmap;
 	
 	import citrus.objects.CitrusSprite;
+	import com.miro.rt.data.Config;
+	import com.miro.rt.core.GameManager;
 
 	public class Backgroud 
 	{
@@ -42,9 +44,9 @@ package games.tinywings.box2d
 			state.add(_backGound1);
 		}
 		
-		private function get state():TinyWingsGameState
+		private function get state():GameManager
 		{
-			return TinyWingsGameState.instance;
+			return GameManager.instance;
 		}
 		
 		public function update():void 

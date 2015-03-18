@@ -1,4 +1,4 @@
-package games.tinywings.box2d
+package com.miro.rt.obj 
 {
 	import Box2D.Collision.Shapes.b2PolygonShape;
 	import Box2D.Dynamics.b2BodyDef;
@@ -7,12 +7,12 @@ package games.tinywings.box2d
 	import citrus.objects.platformer.box2d.Hills;
 
 	
-	public class HillsManagingGraphics extends Hills
+	public class Rainbow extends Hills
 	{
 		private var _initHillPlatform:Boolean;
 		private var _amplitude:Number;
 		
-		public function HillsManagingGraphics(name:String, params:Object=null)
+		public function Rainbow(name:String, params:Object=null)
 		{
 			super(name, params);
 		}

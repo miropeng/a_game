@@ -1,19 +1,21 @@
-package games.tinywings.box2d {
+package com.miro.rt.obj  {
 
 	import Box2D.Common.Math.b2Vec2;
 	
 	import citrus.objects.platformer.box2d.Hero;
 	import citrus.physics.PhysicsCollisionCategories;
 	import citrus.physics.box2d.Box2DShapeMaker;
+	import com.miro.rt.data.Config;
+	import com.miro.rt.core.GameManager;
 
 	/**
 	 * @author Cyril Poëtte
 	 */
-	public class Ball extends Hero {
+	public class Totoro extends Hero {
 
 //		public var jumpDecceleration:Number = 1;
 		
-		public function Ball(name:String, params:Object = null) {
+		public function Totoro(name:String, params:Object = null) {
 
 			super(name, params);
 			
@@ -50,7 +52,7 @@ package games.tinywings.box2d {
 			if (controlsEnabled)
 			{
 				
-				if(TinyWingsGameState.instance.touchInput.screenTouched)
+				if(GameManager.instance.touchInput.screenTouched)
 				{
 					friction = _friction;
 					velocity.Add(getSlopeBasedMoveAngle());
@@ -108,7 +110,7 @@ package games.tinywings.box2d {
 				}*/
 				
 				//Cap velocities
-				if(TinyWingsGameState.instance.isStart)
+				if(GameManager.instance.isStart)
 				{
 					if (velocity.x > (maxVelocity))
 						velocity.x = maxVelocity;

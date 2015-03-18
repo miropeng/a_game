@@ -1,12 +1,14 @@
-package games.tinywings.box2d
+package com.miro.rt.obj 
 {
 	import Box2D.Common.Math.b2Vec2;
 	
 	import citrus.physics.box2d.Box2DShapeMaker;
+	import com.miro.rt.data.Config;
+	import com.miro.rt.core.GameManager;
 
-	public class ChaseBall extends Ball
+	public class Monster extends Totoro
 	{
-		public function ChaseBall(name:String, params:Object=null)
+		public function Monster(name:String, params:Object=null)
 		{
 			super(name, params);
 			
@@ -28,7 +30,7 @@ package games.tinywings.box2d
 			_timeDelta = timeDelta;
 			
 //			//Cap velocities
-			if(TinyWingsGameState.instance.isStart && TinyWingsGameState.instance.chaseState)
+			if(GameManager.instance.isStart && GameManager.instance.chaseState)
 			{
 				var velocity:b2Vec2 = _body.GetLinearVelocity();
 				if (velocity.x < Config.HERO_MIN_V + 1)

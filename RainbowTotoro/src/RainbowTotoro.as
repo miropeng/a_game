@@ -7,8 +7,8 @@ package
 	
 	import citrus.core.starling.StarlingCitrusEngine;
 	import citrus.utils.Mobile;
+	import com.miro.rt.core.GameManager;
 	
-	import games.tinywings.box2d.TinyWingsGameState;
 	
 	public class RainbowTotoro extends StarlingCitrusEngine
 	{
@@ -53,7 +53,7 @@ package
 		
 		override public function handleStarlingReady():void
 		{
-			state = new TinyWingsGameState();
+			state = new GameManager();
 		}
 	}
 }

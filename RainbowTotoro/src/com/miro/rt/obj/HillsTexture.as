@@ -1,4 +1,4 @@
-package games.tinywings.box2d
+package com.miro.rt.obj 
 {
 
 	import flash.display.Bitmap;
