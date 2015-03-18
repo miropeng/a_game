@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:4793c8882b51049163173fc174cb31e3:47a352fd9ccadaba0c847fbaba9abad2:cc52c42364d7a30b99dbf7096efb07e1$ -->
+<TextureAtlas imagePath="atlas0.png">
+    <SubTexture name="b0" x="2" y="2" width="1500" height="900"/>
+    <SubTexture name="b1" x="2" y="904" width="1500" height="129" frameX="0" frameY="-6" frameWidth="1500" frameHeight="135"/>
+    <SubTexture name="m0" x="1504" y="113" width="87" height="176"/>
+    <SubTexture name="totoro" x="1504" y="2" width="125" height="109"/>
+</TextureAtlas>

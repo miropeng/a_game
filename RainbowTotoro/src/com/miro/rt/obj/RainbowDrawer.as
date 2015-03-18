@@ -1,6 +1,8 @@
 package com.miro.rt.obj 
 {
 
+	import com.miro.rt.res.ResAssets;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
@@ -34,9 +36,10 @@ package com.miro.rt.obj
 		private var _flagAdded:Boolean = false;
 		
 		private var _textureIndex:int = 0;
+		private var _scale:Number;
 		
-		public function RainbowDrawer() {
-			
+		public function RainbowDrawer(scale:Number) {
+			_scale = scale;
 		}
 		
 		public function init(sliceWidth:uint, sliceHeight:uint):void {
@@ -46,7 +49,7 @@ package com.miro.rt.obj
 			
 			_groundTextures = new Vector.<Texture>();
 			
-			_fullTexture = new Ground() as Bitmap;
+			_fullTexture = new ResAssets.RainbowClip() as Bitmap;
 			var bd:BitmapData = _fullTexture.bitmapData;
 			
 			for (var i:uint = 0; i < 10; i++)
@@ -81,7 +84,8 @@ package com.miro.rt.obj
 			_images.push(image);
 			
 			var matrix:Matrix = image.transformationMatrix;
-			matrix.translate(body.GetPosition().x * 30, currentYPoint);  // body.GetPosition().x * _box2D.scale
+//			matrix.translate(body.GetPosition().x * 30, currentYPoint);  // body.GetPosition().x * _box2D.scale
+			matrix.translate(body.GetPosition().x * _scale, currentYPoint); 
 			matrix.a = 1.04;
 			matrix.b = (nextYPoint - currentYPoint)  / _sliceWidth;
 			image.transformationMatrix.copyFrom(matrix); 

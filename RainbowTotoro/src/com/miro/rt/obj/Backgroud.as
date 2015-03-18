@@ -1,20 +1,19 @@
 package com.miro.rt.obj 
 {
-	import flash.display.Bitmap;
+	import com.miro.rt.core.GameManager;
+	import com.miro.rt.data.Config;
+	import com.miro.rt.res.ResAssets;
 	
 	import citrus.objects.CitrusSprite;
-	import com.miro.rt.data.Config;
-	import com.miro.rt.core.GameManager;
+	
+	import starling.display.Image;
+	import starling.textures.Texture;
 
 	public class Backgroud 
 	{
-		[Embed(source="/../embed/b0.png")]
-		public static const back0Class:Class;
 		private var _backSky0:CitrusSprite;
 		private var _backSky1:CitrusSprite;
-		
-		[Embed(source="/../embed/b1.png")]
-		public static const back1Class:Class;
+	
 		private var _backGroud0:CitrusSprite;
 		private var _backGound1:CitrusSprite;
 		
@@ -24,7 +23,7 @@ package com.miro.rt.obj
 		
 		public function Backgroud()
 		{
-			var backView1:Bitmap  = new back0Class();
+			var backView1:Texture  = ResAssets.getAtlas().getTexture("b0");
 			_clipWidth = backView1.width - 1;
 			var clipHeight:Number = backView1.height;
 			var backY:Number = state.stage.stageHeight - clipHeight + 10;
@@ -34,7 +33,7 @@ package com.miro.rt.obj
 			state.add(_backSky0);
 			state.add(_backSky1);
 			
-			var backView2:Bitmap  = new back1Class();
+			var backView2:Texture  = ResAssets.getAtlas().getTexture("b1");
 			clipHeight = backView2.height;
 			backY = state.stage.stageHeight - clipHeight + 20;
 			

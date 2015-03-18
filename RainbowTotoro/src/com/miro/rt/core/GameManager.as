@@ -1,6 +1,13 @@
 package com.miro.rt.core  {
 
-	import flash.display.DisplayObject;
+	import com.miro.rt.data.Config;
+	import com.miro.rt.obj.Backgroud;
+	import com.miro.rt.obj.Monster;
+	import com.miro.rt.obj.Rainbow;
+	import com.miro.rt.obj.RainbowDrawer;
+	import com.miro.rt.obj.Totoro;
+	import com.miro.rt.res.ResAssets;
+	
 	import flash.geom.Point;
 	
 	import Box2D.Common.Math.b2Vec2;
@@ -9,22 +16,14 @@ package com.miro.rt.core  {
 	
 	import citrus.core.starling.StarlingState;
 	import citrus.physics.box2d.Box2D;
-	import com.miro.rt.obj.Backgroud;
-	import com.miro.rt.obj.Monster;
-	import com.miro.rt.obj.Totoro;
-	import com.miro.rt.obj.Rainbow;
-	import com.miro.rt.obj.RainbowDrawer;
-	import com.miro.rt.data.Config;
+	
+	import starling.display.Image;
 
 	/**
 	 * @author Cyril Poëtte
 	 */
-	public class GameManager extends StarlingState {
-		
-		[Embed(source="/../embed/totoro.png")]
-		public static const HeroView:Class;
-		[Embed(source="/../embed/m0.png")]
-		public static const MView:Class;
+	public class GameManager extends StarlingState 
+	{
 		public static var instance:GameManager;
 		
 		private var _box2D:Box2D;
@@ -34,8 +33,8 @@ package com.miro.rt.core  {
 		private var _back:Backgroud;
 		
 		private var _hillsTexture:RainbowDrawer;
-		private var _heroView:DisplayObject;
-		private var _mView:DisplayObject;
+		private var _heroView:Image;
+		private var _monsterView:Image;
 		public var isStart:Boolean;
 		public var touchInput:TouchInput;
 		public var chaseState:Boolean;
@@ -61,17 +60,16 @@ package com.miro.rt.core  {
 			
 //			_box2D.visible = true;
 			_back = new Backgroud();
-			_heroView = new HeroView();
-			_mView = new MView();
-			_hillsTexture = new RainbowDrawer();
-//			
+			_heroView = new Image(ResAssets.getAtlas().getTexture("totoro"));
+			_monsterView = new Image(ResAssets.getAtlas().getTexture("m0"));
+			_hillsTexture = new RainbowDrawer(_box2D.scale);
 			
 			_ball = new Totoro("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1, view: _heroView});
 			_ball.x = Config.HEOR_START_X * _box2D.scale;
 			_ball.y = -10 * _box2D.scale;
 			add(_ball);
 			
-			_chaseBall = new Monster("chaseHero", {radius:1, group:1, view: _mView});
+			_chaseBall = new Monster("chaseHero", {radius:1, group:1, view: _monsterView});
 			_chaseBall.x = _ball.x - Config.CHASE_GAP * _box2D.scale;
 			_chaseBall.y = -10 * _box2D.scale;
 			add(_chaseBall);
