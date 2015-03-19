@@ -1,5 +1,6 @@
 package com.miro.rt.scene
 {
+	import com.miro.rt.core.PatternManager;
 	import com.miro.rt.core.TouchInput;
 	import com.miro.rt.data.Config;
 	import com.miro.rt.obj.Backgroud;
@@ -31,6 +32,8 @@ package com.miro.rt.scene
 		private var _touchInput:TouchInput;
 		private var _hud:HUD;
 		
+		
+		
 		public function GameScene()
 		{
 			super();
@@ -42,20 +45,20 @@ package com.miro.rt.scene
 
 			_box2D = new Box2D("box2d");
 			_box2D.gravity = new b2Vec2(0, Config.G);
-//			_box2D.visible = true;
+			_box2D.visible = true;
 			add(_box2D);
 			
 			_touchInput = new TouchInput();
 			_touchInput.initialize();
 			
 			_totoro = new Totoro("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1});
-			_totoro.view = new Image(ResAssets.getAtlas().getTexture("totoro"));
+//			_totoro.view = new Image(ResAssets.getAtlas().getTexture("totoro"));
 			_totoro.x = Config.HEOR_START_X * _box2D.scale;
 			_totoro.y = -10 * _box2D.scale;
 			add(_totoro);
 			
-			_back = new Backgroud(this);
-			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
+//			_back = new Backgroud(this);
+//			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
 			
 			_rainbow = new Rainbow("hills",{rider:_totoro, sliceWidth:30, roundFactor:15, sliceHeight:78, widthHills:stage.stageWidth, registration:"topLeft", view:_rainbowDrawer});
 			add(_rainbow);
@@ -67,6 +70,7 @@ package com.miro.rt.scene
 			
 			// Play screen background music.
 			if (!Sounds.muted) Sounds.sndBgGame.play(0, 999);
+			PatternManager.instance.initialize(this);
 		}
 		
 		override public function update(timeDelta:Number):void
@@ -85,8 +89,19 @@ package com.miro.rt.scene
 					_hud.distance = Math.round(_totoro.x / _box2D.scale);
 				}
 				// Set the background's x based on hero's x.
-				_back.update(_totoro.x);
+				if(_back)
+				{
+					_back.update(_totoro.x);
+				}
 				_totoro.state = _touchInput.screenTouched ? TotoroState.ADD_V : TotoroState.FLY;
+				
+				
+				// Create food items.
+				PatternManager.instance.setFoodItemsPattern();
+				PatternManager.instance.createFoodItemsPattern();
+				
+				// Create obstacles.
+				PatternManager.instance.initObstacle();
 			}
 			else
 			{

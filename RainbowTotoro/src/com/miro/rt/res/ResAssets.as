@@ -26,7 +26,7 @@ package  com.miro.rt.res
 		public static const AtlasTextureGame0:Class;
 		
 		[Embed(source="/../embed/mySpritesheet.xml", mimeType="application/octet-stream")]
-		public static const AtlasXmlGame1:Class;
+		public static const AtlasXmlGame0:Class;
 		
 		/**
 		 * Texture Atlas 
@@ -55,8 +55,8 @@ package  com.miro.rt.res
 		{
 			if (gameTextureAtlas == null)
 			{
-				var texture:Texture = getTexture("AtlasTextureGame");
-				var xml:XML = XML(new AtlasXmlGame());
+				var texture:Texture = getTexture("AtlasTextureGame0");
+				var xml:XML = XML(new AtlasXmlGame0());
 				gameTextureAtlas=new TextureAtlas(texture, xml);
 			}
 			
