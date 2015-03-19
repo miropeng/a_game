@@ -13,8 +13,6 @@
 
 package com.miro.rt.core
 {	
-	import games.hungryhero.com.hsharma.hungryHero.customObjects.Font;
-	
 	import starling.text.BitmapFont;
 	import starling.text.TextField;
 	import starling.textures.Texture;
@@ -30,28 +28,28 @@ package com.miro.rt.core
 		/**
 		 *  Regular font used for UI.
 		 */		
-		[Embed(source="/../embed/games/hungryhero/fonts/bitmap/fontRegular.png")]
+		[Embed(source="/../embed/fonts/bitmap/fontRegular.png")]
 		public static const Font_Regular:Class;
 		
-		[Embed(source="/../embed/games/hungryhero/fonts/bitmap/fontRegular.fnt", mimeType="application/octet-stream")]
+		[Embed(source="/../embed/fonts/bitmap/fontRegular.fnt", mimeType="application/octet-stream")]
 		public static const XML_Regular:Class;
 		
 		/**
 		 * Font for score label. 
 		 */		
-		[Embed(source="/../embed/games/hungryhero/fonts/bitmap/fontScoreLabel.png")]
+		[Embed(source="/../embed/fonts/bitmap/fontScoreLabel.png")]
 		public static const Font_ScoreLabel:Class;
 		
-		[Embed(source="/../embed/games/hungryhero/fonts/bitmap/fontScoreLabel.fnt", mimeType="application/octet-stream")]
+		[Embed(source="/../embed/fonts/bitmap/fontScoreLabel.fnt", mimeType="application/octet-stream")]
 		public static const XML_ScoreLabel:Class;
 		
 		/**
 		 * Font for score value. 
 		 */		
-		[Embed(source="/../embed/games/hungryhero/fonts/bitmap/fontScoreValue.png")]
+		[Embed(source="/../embed/fonts/bitmap/fontScoreValue.png")]
 		public static const Font_ScoreValue:Class;
 		
-		[Embed(source="/../embed/games/hungryhero/fonts/bitmap/fontScoreValue.fnt", mimeType="application/octet-stream")]
+		[Embed(source="/../embed/fonts/bitmap/fontScoreValue.fnt", mimeType="application/octet-stream")]
 		public static const XML_ScoreValue:Class;
 		
 		/**
@@ -79,5 +77,5 @@ package com.miro.rt.core
 		}
 	}
 }
-import games.hungryhero;
+
 

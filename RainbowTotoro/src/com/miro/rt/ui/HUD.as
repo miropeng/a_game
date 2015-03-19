@@ -13,8 +13,8 @@
 
 package com.miro.rt.ui
 {
-	import games.hungryhero.Fonts;
-	import games.hungryhero.com.hsharma.hungryHero.customObjects.Font;
+	import com.miro.rt.core.Font;
+	import com.miro.rt.core.Fonts;
 	
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -40,10 +40,10 @@ package com.miro.rt.ui
 		private var _foodScore:int;
 		
 		/** Lives icon.  */		
-		private var livesLabel:TextField;
+//		private var livesLabel:TextField;
 		
 		/** Lives TextField. */		
-		private var livesText:TextField;
+//		private var livesText:TextField;
 		
 		/** Distance icon. */		
 		private var distanceLabel:TextField;
@@ -81,23 +81,23 @@ package com.miro.rt.ui
 			fontScoreValue = Fonts.getFont("ScoreValue");
 			
 			// Lives label
-			livesLabel = new TextField(150, 20, "L I V E S", fontScoreLabel.fontName, fontScoreLabel.fontSize, 0xffffff);
-			livesLabel.hAlign = HAlign.RIGHT;
-			livesLabel.vAlign = VAlign.TOP;
-			
-			livesLabel.x = 150;
-			livesLabel.y = 5;
-			this.addChild(livesLabel);
+//			livesLabel = new TextField(150, 20, "L I V E S", fontScoreLabel.fontName, fontScoreLabel.fontSize, 0xffffff);
+//			livesLabel.hAlign = HAlign.RIGHT;
+//			livesLabel.vAlign = VAlign.TOP;
+//			
+//			livesLabel.x = 150;
+//			livesLabel.y = 5;
+//			this.addChild(livesLabel);
 			
 			// Lives
-			livesText = new TextField(150, 75, "5", fontScoreValue.fontName, fontScoreValue.fontSize, 0xffffff);
-			livesText.hAlign = HAlign.RIGHT;
-			livesText.vAlign = VAlign.TOP;
-			livesText.width = livesLabel.width;
-			
-			livesText.x = int(livesLabel.x + livesLabel.width - livesText.width);
-			livesText.y = livesLabel.y + livesLabel.height;
-			this.addChild(livesText);
+//			livesText = new TextField(150, 75, "0", fontScoreValue.fontName, fontScoreValue.fontSize, 0xffffff);
+//			livesText.hAlign = HAlign.RIGHT;
+//			livesText.vAlign = VAlign.TOP;
+//			livesText.width = livesLabel.width;
+//			
+//			livesText.x = int(livesLabel.x + livesLabel.width - livesText.width);
+//			livesText.y = livesLabel.y + livesLabel.height;
+//			this.addChild(livesText);
 			
 			// Distance label
 			distanceLabel = new TextField(150, 20, "D I S T A N C E", fontScoreLabel.fontName, fontScoreLabel.fontSize, 0xffffff);
@@ -143,12 +143,12 @@ package com.miro.rt.ui
 		 * @return 
 		 * 
 		 */
-		public function get lives():int { return _lives; }
-		public function set lives(value:int):void
-		{
-			_lives = value;
-			livesText.text = _lives.toString();
-		}
+//		public function get lives():int { return _lives; }
+//		public function set lives(value:int):void
+//		{
+//			_lives = value;
+//			livesText.text = _lives.toString();
+//		}
 		
 		/**
 		 * Distance travelled. 
@@ -189,5 +189,5 @@ package com.miro.rt.ui
 		}
 	}
 }
-import games.hungryhero.com.hsharma.hungryHero.ui;
+
 

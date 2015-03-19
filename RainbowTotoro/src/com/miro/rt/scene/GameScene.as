@@ -7,6 +7,7 @@ package com.miro.rt.scene
 	import com.miro.rt.obj.RainbowDrawer;
 	import com.miro.rt.obj.Totoro;
 	import com.miro.rt.res.ResAssets;
+	import com.miro.rt.ui.HUD;
 	
 	import flash.geom.Point;
 	
@@ -26,6 +27,7 @@ package com.miro.rt.scene
 		private var _box2D:Box2D;
 		private var _isStart:Boolean;
 		private var _touchInput:TouchInput;
+		private var _hud:HUD;
 		
 		public function GameScene()
 		{
@@ -56,17 +58,29 @@ package com.miro.rt.scene
 			_rainbow = new Rainbow("hills",{rider:_totoro, sliceWidth:30, roundFactor:15, sliceHeight:78, widthHills:stage.stageWidth, registration:"topLeft", view:_rainbowDrawer});
 			add(_rainbow);
 			
+			_hud = new HUD();
+			addChild(_hud);
+			
 			view.camera.setUp(_totoro,null,new Point(0.3 , 0.5));
 		}
 		
 		override public function update(timeDelta:Number):void
 		{
 			super.update(timeDelta);
-			if(_rainbowDrawer) _rainbowDrawer.update();
-			if(_back) _back.update();
+			
+			if(_rainbowDrawer) 
+			{
+				_rainbowDrawer.update();
+			}
 			
 			if(_isStart)
 			{
+				if(_back) _back.update();
+				if(_hud)
+				{
+					_hud.distance = Math.round(_totoro.x / _box2D.scale);
+				}
+				
 				_totoro.addTouchVel = _touchInput.screenTouched;
 			}
 			else
