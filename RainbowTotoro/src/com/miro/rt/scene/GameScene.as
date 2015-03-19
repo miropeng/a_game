@@ -40,21 +40,21 @@ package com.miro.rt.scene
 
 			_box2D = new Box2D("box2d");
 			_box2D.gravity = new b2Vec2(0, Config.G);
-//			_box2D.visible = true;
+			_box2D.visible = true;
 			add(_box2D);
 			
 			_touchInput = new TouchInput();
 			_touchInput.initialize();
 			
 			_totoro = new Totoro("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1});
-			_totoro.view = new Image(ResAssets.getAtlas().getTexture("totoro"));
+//			_totoro.view = new Image(ResAssets.getAtlas().getTexture("totoro"));
 			_totoro.x = Config.HEOR_START_X * _box2D.scale;
 			_totoro.y = -10 * _box2D.scale;
 			add(_totoro);
 			
-			_back = new Backgroud(this, _totoro);
+//			_back = new Backgroud(this, _totoro);
+//			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
 			
-			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
 			_rainbow = new Rainbow("hills",{rider:_totoro, sliceWidth:30, roundFactor:15, sliceHeight:78, widthHills:stage.stageWidth, registration:"topLeft", view:_rainbowDrawer});
 			add(_rainbow);
 			
@@ -102,6 +102,7 @@ package com.miro.rt.scene
 			_box2D.destroy();
 			_touchInput.destroy();
 			_rainbowDrawer.destroy();
+			_hud.dispose();
 			
 			_totoro = null;
 			_rainbow = null;
@@ -110,6 +111,7 @@ package com.miro.rt.scene
 			_box2D = null;
 			_touchInput = null;
 			_rainbowDrawer = null;
+			_hud = null;
 			
 			super.destroy();
 		}

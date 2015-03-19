@@ -187,6 +187,21 @@ package com.miro.rt.ui
 			}
 			return ret;
 		}
+		
+		override public function dispose():void
+		{
+			distanceLabel.dispose();
+			distanceText.dispose();
+			foodScoreLabel.dispose();
+			foodScoreText.dispose();
+			
+			distanceLabel = null;
+			distanceText = null;
+			foodScoreLabel = null;
+			foodScoreText = null;
+			fontScoreLabel = null;
+			fontScoreValue = null;
+		}
 	}
 }
 
