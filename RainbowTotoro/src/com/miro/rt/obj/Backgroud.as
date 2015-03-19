@@ -6,7 +6,6 @@ package com.miro.rt.obj
 	
 	import citrus.core.starling.StarlingState;
 	import citrus.objects.CitrusSprite;
-	import citrus.objects.platformer.box2d.Hero;
 	
 	import starling.textures.Texture;
 
@@ -22,14 +21,12 @@ package com.miro.rt.obj
 		private var _clipGroundIdx:int;
 		private var _clipWidth:Number;
 		private var _state:StarlingState;
-		private var _target:Hero;
 		
-		public function Backgroud(state:StarlingState, target:Hero)
+		public function Backgroud(state:StarlingState)
 		{
 			_state = state;
-			_target = target;
 			
-			var backView1:Texture  = ResAssets.getAtlas().getTexture("b0");
+			var backView1:Texture  = ResAssets.getAtlas().getTexture("bgLayer0");
 			_clipWidth = backView1.width - 1;
 			var clipHeight:Number = backView1.height;
 			var backY:Number = _state.stage.stageHeight - clipHeight + 10;
@@ -39,7 +36,7 @@ package com.miro.rt.obj
 			_state.add(_backSky0);
 			_state.add(_backSky1);
 			
-			var backView2:Texture  = ResAssets.getAtlas().getTexture("b1");
+			var backView2:Texture  = ResAssets.getAtlas().getTexture("bgLayer1");
 			clipHeight = backView2.height;
 			backY = _state.stage.stageHeight - clipHeight + 20;
 			
@@ -55,12 +52,12 @@ package com.miro.rt.obj
 			return GameManager.instance;
 		}
 		
-		public function update():void 
+		public function update(tarX:Number):void 
 		{
 			var outOfStage:Boolean = false;
 			var outOffX:Number = 100;
 			
-			outOfStage = _target.x * Config.BACK0_MOVE_RATE >= (_clipSkyIdx + 1) * _clipWidth + outOffX;
+			outOfStage = tarX * Config.BACK0_MOVE_RATE >= (_clipSkyIdx + 1) * _clipWidth + outOffX;
 			if(outOfStage)
 			{
 				if(_clipSkyIdx % 2 == 0)
@@ -74,7 +71,7 @@ package com.miro.rt.obj
 				_clipSkyIdx++;
 			}
 			
-			outOfStage = _target.x * Config.BACK1_MOVE_RATE >= (_clipGroundIdx + 1) * _clipWidth + outOffX;
+			outOfStage = tarX * Config.BACK1_MOVE_RATE >= (_clipGroundIdx + 1) * _clipWidth + outOffX;
 			if(outOfStage)
 			{
 				if(_clipGroundIdx % 2 == 0)
@@ -98,7 +95,6 @@ package com.miro.rt.obj
 			_backGound1.destroy();
 			
 			_state = null;
-			_target = null;
 		}
 	}
 }

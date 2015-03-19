@@ -6,8 +6,10 @@ package com.miro.rt.scene
 	import com.miro.rt.obj.Rainbow;
 	import com.miro.rt.obj.RainbowDrawer;
 	import com.miro.rt.obj.Totoro;
+	import com.miro.rt.obj.TotoroState;
 	import com.miro.rt.res.ResAssets;
 	import com.miro.rt.ui.HUD;
+	import com.miro.rt.ui.Sounds;
 	
 	import flash.geom.Point;
 	
@@ -40,20 +42,20 @@ package com.miro.rt.scene
 
 			_box2D = new Box2D("box2d");
 			_box2D.gravity = new b2Vec2(0, Config.G);
-			_box2D.visible = true;
+//			_box2D.visible = true;
 			add(_box2D);
 			
 			_touchInput = new TouchInput();
 			_touchInput.initialize();
 			
 			_totoro = new Totoro("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1});
-//			_totoro.view = new Image(ResAssets.getAtlas().getTexture("totoro"));
+			_totoro.view = new Image(ResAssets.getAtlas().getTexture("totoro"));
 			_totoro.x = Config.HEOR_START_X * _box2D.scale;
 			_totoro.y = -10 * _box2D.scale;
 			add(_totoro);
 			
-//			_back = new Backgroud(this, _totoro);
-//			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
+			_back = new Backgroud(this);
+			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
 			
 			_rainbow = new Rainbow("hills",{rider:_totoro, sliceWidth:30, roundFactor:15, sliceHeight:78, widthHills:stage.stageWidth, registration:"topLeft", view:_rainbowDrawer});
 			add(_rainbow);
@@ -62,6 +64,9 @@ package com.miro.rt.scene
 			addChild(_hud);
 			
 			view.camera.setUp(_totoro,null,new Point(0.3 , 0.5));
+			
+			// Play screen background music.
+			if (!Sounds.muted) Sounds.sndBgGame.play(0, 999);
 		}
 		
 		override public function update(timeDelta:Number):void
@@ -75,20 +80,19 @@ package com.miro.rt.scene
 			
 			if(_isStart)
 			{
-				if(_back) _back.update();
 				if(_hud)
 				{
 					_hud.distance = Math.round(_totoro.x / _box2D.scale);
 				}
-				
-				_totoro.addTouchVel = _touchInput.screenTouched;
+				// Set the background's x based on hero's x.
+				_back.update(_totoro.x);
+				_totoro.state = _touchInput.screenTouched ? TotoroState.ADD_V : TotoroState.FLY;
 			}
 			else
 			{
 				if(_touchInput.screenTouched)
 				{
 					_isStart = true;
-					_totoro.limitVel = true;
 				}
 			}
 		}

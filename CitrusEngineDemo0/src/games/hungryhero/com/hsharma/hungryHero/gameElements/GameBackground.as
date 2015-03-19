@@ -48,7 +48,7 @@ package games.hungryhero.com.hsharma.hungryHero.gameElements {
 		public function GameBackground(name:String, params:Object = null)
 		{
 			super(name, params);
-			
+			updateCallEnabled = true;
 			_container = new Sprite();
 			
 			_view = _container;

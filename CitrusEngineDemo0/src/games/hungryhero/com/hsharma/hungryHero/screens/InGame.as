@@ -16,6 +16,7 @@ package games.hungryhero.com.hsharma.hungryHero.screens {
 	import flash.geom.Rectangle;
 	import flash.media.SoundMixer;
 	
+	import citrus.core.starling.StarlingCitrusEngine;
 	import citrus.core.starling.StarlingState;
 	import citrus.objects.CitrusSprite;
 	import citrus.view.starlingview.StarlingArt;
@@ -45,6 +46,7 @@ package games.hungryhero.com.hsharma.hungryHero.screens {
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starling.extensions.particles.PDParticleSystem;
 	import starling.textures.Texture;
 	
@@ -260,8 +262,8 @@ package games.hungryhero.com.hsharma.hungryHero.screens {
 			
 			super.initialize();
 			
-			this.addChild(new Game(this));
-//			start();
+//			this.addChild(new Game(this));
+			start();
 		}
 		
 		public function start():void
@@ -630,7 +632,8 @@ package games.hungryhero.com.hsharma.hungryHero.screens {
 			
 			gameOverContainer.visible = false;
 			
-			if (this.hasEventListener(TouchEvent.TOUCH)) this.removeEventListener(TouchEvent.TOUCH, onTouch);
+//			if (this.hasEventListener(TouchEvent.TOUCH)) this.removeEventListener(TouchEvent.TOUCH, onTouch);
+			(_ce as StarlingCitrusEngine).starling.stage.removeEventListener(TouchEvent.TOUCH, _touchEvent);
 			
 			if (this.hasEventListener(Event.ENTER_FRAME)) this.removeEventListener(Event.ENTER_FRAME, onGameTick);
 		}
@@ -665,26 +668,40 @@ package games.hungryhero.com.hsharma.hungryHero.screens {
 			
 			// Touch interaction
 			touchable = true;
-			this.addEventListener(TouchEvent.TOUCH, onTouch);
+//			this.addEventListener(TouchEvent.TOUCH, onTouch);
+			(_ce as StarlingCitrusEngine).starling.stage.addEventListener(TouchEvent.TOUCH, _touchEvent);
 			
 			// Game tick
 			this.addEventListener(Event.ENTER_FRAME, onGameTick);
 		}
 		
-		/**
-		 * On interaction with game - mouse move (web) or touch drag (devices). 
-		 * @param event
-		 * 
-		 */
-		private function onTouch(event:TouchEvent):void
-		{
-			touch = event.getTouch(stage);
+		private function _touchEvent(tEvt:TouchEvent):void {
+			
+			var touch:Touch = tEvt.getTouch((_ce as StarlingCitrusEngine).starling.stage, TouchPhase.BEGAN);
+//			var touchEnd:Touch = tEvt.getTouch((_ce as StarlingCitrusEngine).starling.stage, TouchPhase.ENDED);
+			
+//			touch = event.getTouch(stage);
 			if(touch)
 			{
 				touchX = touch.globalX;
 				touchY = touch.globalY;
 			}
 		}
+		
+//		/**
+//		 * On interaction with game - mouse move (web) or touch drag (devices). 
+//		 * @param event
+//		 * 
+//		 */
+//		private function onTouch(event:TouchEvent):void
+//		{
+//			touch = event.getTouch(stage);
+//			if(touch)
+//			{
+//				touchX = touch.globalX;
+//				touchY = touch.globalY;
+//			}
+//		}
 		
 		/**
 		 * Game Tick - every frame of the game.

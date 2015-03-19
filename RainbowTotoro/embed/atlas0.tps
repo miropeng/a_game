@@ -188,10 +188,9 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>m0.png</filename>
             <filename>totoro.png</filename>
-            <filename>b0.png</filename>
-            <filename>b1.png</filename>
+            <filename>bgLayer0.png</filename>
+            <filename>bgLayer1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
