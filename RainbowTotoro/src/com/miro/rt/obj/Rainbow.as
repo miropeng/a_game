@@ -44,8 +44,6 @@ package com.miro.rt.obj
 		override protected function _createSlice():void {
 			// Every time a new hill has to be created this algorithm predicts where the slices will be positioned
 			if (_indexSliceInCurrentHill >= _slicesInCurrentHill) {
-				hillStartY += _randomHeight;
-				
 				if(roundFactor == 0) ++roundFactor;			
 				
 				_amplitude = 0;
@@ -73,26 +71,17 @@ package com.miro.rt.obj
 				}
 				
 				_realWidth += hillWidth;
-				
-				_randomHeight = _amplitude;
-				_realHeight += _amplitude;
-				_realHeight -= _amplitude;
-				hillStartY -= _randomHeight;
 			}
 			
 			
 			if (_indexSliceInCurrentHill == _slicesInCurrentHill / 2)
 			{
-				hillStartY -= _amplitude;
-				_randomHeight = _amplitude;	
-				hillStartY += _randomHeight;
+				trace("top point.");
 			}
 			
-			
 			// Calculate the position slice
-			_currentYPoint = _sliceVectorConstructor[0].y = (hillStartY + _randomHeight *  Math.cos(2 * Math.PI / _slicesInCurrentHill * _indexSliceInCurrentHill)) / _box2D.scale;
-			_nextYPoint =_sliceVectorConstructor[1].y = (hillStartY + _randomHeight *  Math.cos(2 * Math.PI / _slicesInCurrentHill * (_indexSliceInCurrentHill+1))) / _box2D.scale;
-//			trace(hillStartY,_randomHeight,_indexSliceInCurrentHill, _slicesInCurrentHill, "[", _currentYPoint, _nextYPoint, "]");
+			_currentYPoint = _sliceVectorConstructor[0].y = (_amplitude - _amplitude *  Math.cos(2 * Math.PI / _slicesInCurrentHill * _indexSliceInCurrentHill)) / _box2D.scale;
+			_nextYPoint =_sliceVectorConstructor[1].y = (_amplitude - _amplitude *  Math.cos(2 * Math.PI / _slicesInCurrentHill * (_indexSliceInCurrentHill+1))) / _box2D.scale;
 			
 			var slicePolygon:b2PolygonShape = new b2PolygonShape();
 			slicePolygon.SetAsVector(_sliceVectorConstructor, 2);
