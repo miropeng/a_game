@@ -1,5 +1,7 @@
 package
 {
+	import com.miro.rt.core.GameManager;
+	
 	import flash.display.Stage3D;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -7,7 +9,6 @@ package
 	
 	import citrus.core.starling.StarlingCitrusEngine;
 	import citrus.utils.Mobile;
-	import com.miro.rt.core.GameManager;
 	
 	
 	public class RainbowTotoro extends StarlingCitrusEngine
@@ -44,8 +45,8 @@ package
 			super.setUpStarling(debugMode, antiAliasing, viewPort, stage3D);
 			
 			if (compileForMobile) {
-				//				// set iPhone & iPad size, used for Starling contentScaleFactor
-				//				// landscape mode!
+//				// set iPhone & iPad size, used for Starling contentScaleFactor
+//				// landscape mode!
 				_starling.stage.stageWidth = 800;
 				_starling.stage.stageHeight = 480;
 			}
@@ -53,7 +54,7 @@ package
 		
 		override public function handleStarlingReady():void
 		{
-			state = new GameManager();
+			GameManager.instance.initialize(this);
 		}
 	}
 }

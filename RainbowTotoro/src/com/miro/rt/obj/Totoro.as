@@ -1,19 +1,21 @@
 package com.miro.rt.obj  {
 
+	import com.miro.rt.data.Config;
+	
 	import Box2D.Common.Math.b2Vec2;
 	
 	import citrus.objects.platformer.box2d.Hero;
 	import citrus.physics.PhysicsCollisionCategories;
 	import citrus.physics.box2d.Box2DShapeMaker;
-	import com.miro.rt.data.Config;
-	import com.miro.rt.core.GameManager;
 
 	/**
 	 * @author Cyril Poëtte
 	 */
 	public class Totoro extends Hero {
 
-//		public var jumpDecceleration:Number = 1;
+		private var _addTouchVel:Boolean;
+		private var _limitVel:Boolean;
+
 		
 		public function Totoro(name:String, params:Object = null) {
 
@@ -40,7 +42,27 @@ package com.miro.rt.obj  {
 		override protected function getSlopeBasedMoveAngle():b2Vec2
 		{
 //			return Box2DUtils.Rotateb2Vec2(new b2Vec2(acceleration, 8), _combinedGroundAngle);
-			return new b2Vec2(3, 8);
+			return Config.HERO_DEVICE_V;
+		}
+		
+		public function set addTouchVel(value:Boolean):void
+		{
+			_addTouchVel = value;
+		}
+		
+		public function get addTouchVel():Boolean
+		{
+			return _addTouchVel;
+		}
+		
+		public function get limitVel():Boolean
+		{
+			return _limitVel;
+		}
+		
+		public function set limitVel(value:Boolean):void
+		{
+			_limitVel = value;
 		}
 		
 		override public function update(timeDelta:Number):void
@@ -52,7 +74,7 @@ package com.miro.rt.obj  {
 			if (controlsEnabled)
 			{
 				
-				if(GameManager.instance.touchInput.screenTouched)
+				if(_addTouchVel)
 				{
 					friction = _friction;
 					velocity.Add(getSlopeBasedMoveAngle());
@@ -110,7 +132,7 @@ package com.miro.rt.obj  {
 				}*/
 				
 				//Cap velocities
-				if(GameManager.instance.isStart)
+				if(_limitVel)
 				{
 					if (velocity.x > (maxVelocity))
 						velocity.x = maxVelocity;

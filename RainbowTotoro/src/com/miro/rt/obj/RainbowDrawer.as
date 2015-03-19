@@ -99,5 +99,28 @@ package com.miro.rt.obj
 			_images[index] = null;
 			_images.splice(index, 1);
 		}
+		
+		public function destroy():void
+		{
+			 Ground = null;
+			
+			if(_fullTexture)
+			{
+				_fullTexture.bitmapData.dispose();
+				_fullTexture= null;
+			}
+			
+			for each(var t:Texture in _groundTextures)
+			{
+				t.dispose();
+			}
+			_groundTextures = null;
+			
+			for each(var i:Image in _images)
+			{
+				i.dispose();
+			}
+			_images = null;
+		}
 	}
 }
