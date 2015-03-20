@@ -66,6 +66,14 @@ package com.miro.rt.obj  {
 				}
 				else if(_state == TotoroState.FLY)
 				{
+					var pos:b2Vec2 = _body.GetPosition();
+					var minY:int = -(_ce.screenHeight / 2 - Config.HERO_MIN_GAP) / _box2D.scale;
+					if(pos.y < minY)
+					{
+						pos.y = minY;
+						_body.SetPosition(pos);
+					}
+					
 					if (velocity.x > Config.HERO_MAX_V)
 					{
 						velocity.x = Config.HERO_MAX_V;
@@ -80,6 +88,7 @@ package com.miro.rt.obj  {
 						//update physics with new velocity
 						_body.SetLinearVelocity(velocity);
 					}
+					
 				}
 			}
 			

@@ -274,7 +274,7 @@ package com.miro.rt.core
 			// Create a food item after we pass some distance (patternGap).
 			if (patternGapCount < patternGap )
 			{
-				patternGapCount += 30;//playerSpeed * elapsed;
+				patternGapCount += 100;//playerSpeed * elapsed;
 			}
 			else if (pattern != 0)
 			{

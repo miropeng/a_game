@@ -55,8 +55,8 @@ package  com.miro.rt.res
 		{
 			if (gameTextureAtlas == null)
 			{
-				var texture:Texture = getTexture("AtlasTextureGame0");
-				var xml:XML = XML(new AtlasXmlGame0());
+				var texture:Texture = getTexture("AtlasTextureGame");
+				var xml:XML = XML(new AtlasXmlGame());
 				gameTextureAtlas=new TextureAtlas(texture, xml);
 			}
 			

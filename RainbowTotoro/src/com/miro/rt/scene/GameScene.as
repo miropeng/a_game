@@ -1,6 +1,5 @@
 package com.miro.rt.scene
 {
-	import com.miro.rt.core.PatternManager;
 	import com.miro.rt.core.TouchInput;
 	import com.miro.rt.data.Config;
 	import com.miro.rt.obj.Backgroud;
@@ -12,14 +11,14 @@ package com.miro.rt.scene
 	import com.miro.rt.ui.HUD;
 	import com.miro.rt.ui.Sounds;
 	
+	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import Box2D.Common.Math.b2Vec2;
 	
 	import citrus.core.starling.StarlingState;
 	import citrus.physics.box2d.Box2D;
-	
-	import starling.display.Image;
 
 	public class GameScene extends StarlingState implements IScene
 	{
@@ -45,20 +44,22 @@ package com.miro.rt.scene
 
 			_box2D = new Box2D("box2d");
 			_box2D.gravity = new b2Vec2(0, Config.G);
-			_box2D.visible = true;
 			add(_box2D);
 			
 			_touchInput = new TouchInput();
 			_touchInput.initialize();
 			
-			_totoro = new Totoro("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1});
-//			_totoro.view = new Image(ResAssets.getAtlas().getTexture("totoro"));
+			var totoroView:* = null;
+			
+//			_box2D.visible = true;
+			totoroView = ResAssets.getAtlas().getTexture("totoro");
+			_back = new Backgroud(this);
+			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
+			
+			_totoro = new Totoro("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1, view: totoroView});
 			_totoro.x = Config.HEOR_START_X * _box2D.scale;
 			_totoro.y = -10 * _box2D.scale;
 			add(_totoro);
-			
-//			_back = new Backgroud(this);
-//			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
 			
 			_rainbow = new Rainbow("hills",{rider:_totoro, sliceWidth:30, roundFactor:15, sliceHeight:78, widthHills:stage.stageWidth, registration:"topLeft", view:_rainbowDrawer});
 			add(_rainbow);
@@ -66,16 +67,29 @@ package com.miro.rt.scene
 			_hud = new HUD();
 			addChild(_hud);
 			
-			view.camera.setUp(_totoro,null,new Point(0.3 , 0.5));
+			camera.allowZoom = true;
+//			camera.boundsMode= ACitrusCamera.BOUNDS_MODE_OFFSET;
+			camera.setUp(_totoro,new Rectangle(0, -_ce.screenHeight / 2, _ce.screenWidth * 10000, _ce.screenHeight), new Point(0.2, 0.5));
 			
 			// Play screen background music.
 			if (!Sounds.muted) Sounds.sndBgGame.play(0, 999);
-			PatternManager.instance.initialize(this);
+			
 		}
-		
+//		private var _debugSprite:Sprite;
 		override public function update(timeDelta:Number):void
 		{
 			super.update(timeDelta);
+			
+//			if(!_debugSprite)
+//			{
+//				_debugSprite = new Sprite();
+//				_debugSprite.scaleX = 0.1 * 0.6;
+//				_debugSprite.scaleY = 0.1 * 0.6;
+//				_debugSprite.x = 0;
+//				_debugSprite.y = 100;
+//				GameManager.instance.engine.addChild(_debugSprite);
+//			}
+//			camera.renderDebug(_debugSprite);
 			
 			if(_rainbowDrawer) 
 			{
@@ -94,14 +108,6 @@ package com.miro.rt.scene
 					_back.update(_totoro.x);
 				}
 				_totoro.state = _touchInput.screenTouched ? TotoroState.ADD_V : TotoroState.FLY;
-				
-				
-				// Create food items.
-				PatternManager.instance.setFoodItemsPattern();
-				PatternManager.instance.createFoodItemsPattern();
-				
-				// Create obstacles.
-				PatternManager.instance.initObstacle();
 			}
 			else
 			{
