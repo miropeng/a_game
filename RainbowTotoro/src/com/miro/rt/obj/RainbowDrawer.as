@@ -70,11 +70,13 @@ package com.miro.rt.obj
 			removeEventListener(Event.ADDED_TO_STAGE, _added);
 		}
 		
-		public function update():void {
-			
+		public function update():void 
+		{
 			 //we don't want to move the parent like StarlingArt does!
 			if (_flagAdded)
+			{
 				this.parent.x = this.parent.y = 0;
+			}
 		}
 		
 		public function createSlice(body:b2Body, nextYPoint:Number, currentYPoint:Number):void 

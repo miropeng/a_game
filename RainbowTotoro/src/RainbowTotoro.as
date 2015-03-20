@@ -40,17 +40,17 @@ package
 			}
 		}
 		
-		override public function setUpStarling(debugMode:Boolean=false, antiAliasing:uint=1, viewPort:Rectangle=null, stage3D:Stage3D=null):void
-		{
-			super.setUpStarling(debugMode, antiAliasing, viewPort, stage3D);
-			
-			if (compileForMobile) {
-//				// set iPhone & iPad size, used for Starling contentScaleFactor
-//				// landscape mode!
-				_starling.stage.stageWidth = 800;
-				_starling.stage.stageHeight = 480;
-			}
-		}
+//		override public function setUpStarling(debugMode:Boolean=false, antiAliasing:uint=1, viewPort:Rectangle=null, stage3D:Stage3D=null):void
+//		{
+//			super.setUpStarling(debugMode, antiAliasing, viewPort, stage3D);
+//			
+//			if (compileForMobile) {
+////				// set iPhone & iPad size, used for Starling contentScaleFactor
+////				// landscape mode!
+//				_starling.stage.stageWidth = 800;
+//				_starling.stage.stageHeight = 480;
+//			}
+//		}
 		
 		override public function handleStarlingReady():void
 		{

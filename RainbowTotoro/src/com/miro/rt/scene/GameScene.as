@@ -51,10 +51,10 @@ package com.miro.rt.scene
 			
 			var totoroView:* = null;
 			
-			_box2D.visible = true;
-//			totoroView = ResAssets.getAtlas().getTexture("totoro");
-//			_back = new Backgroud(this);
-//			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
+//			_box2D.visible = true;
+			totoroView = ResAssets.getAtlas().getTexture("totoro");
+			_back = new Backgroud(this);
+			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
 			
 			_totoro = new Totoro("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1, view: totoroView});
 			_totoro.x = Config.HEOR_START_X * _box2D.scale;
