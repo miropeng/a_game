@@ -51,10 +51,10 @@ package com.miro.rt.scene
 			
 			var totoroView:* = null;
 			
-//			_box2D.visible = true;
-			totoroView = ResAssets.getAtlas().getTexture("totoro");
-			_back = new Backgroud(this);
-			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
+			_box2D.visible = true;
+//			totoroView = ResAssets.getAtlas().getTexture("totoro");
+//			_back = new Backgroud(this);
+//			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
 			
 			_totoro = new Totoro("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1, view: totoroView});
 			_totoro.x = Config.HEOR_START_X * _box2D.scale;
@@ -72,7 +72,7 @@ package com.miro.rt.scene
 			camera.setUp(_totoro,new Rectangle(0, -_ce.screenHeight / 2, _ce.screenWidth * 10000, _ce.screenHeight), new Point(0.2, 0.5));
 			
 			// Play screen background music.
-			if (!Sounds.muted) Sounds.sndBgGame.play(0, 999);
+//			if (!Sounds.muted) Sounds.sndBgGame.play(0, 999);
 			
 		}
 //		private var _debugSprite:Sprite;
