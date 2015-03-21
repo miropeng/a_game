@@ -38,7 +38,7 @@ package  com.miro.rt.res
 		public static const AtlasXmlGame:Class;
 		
 		
-		[Embed(source="/../embed/g0.png")]
+		[Embed(source="/../embed/clip.png")]
 		public static const RainbowClip:Class;
 		
 		/**

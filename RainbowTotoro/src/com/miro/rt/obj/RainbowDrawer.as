@@ -82,7 +82,7 @@ package com.miro.rt.obj
 		public function createSlice(body:b2Body, nextYPoint:Number, currentYPoint:Number):void 
 		{
 			var image:Image = new Image(_groundTextures[_textureIndex]);
-			addChild(image);                                                                                                    
+			addChild(image);
 			_images.push(image);
 			
 			var matrix:Matrix = image.transformationMatrix;

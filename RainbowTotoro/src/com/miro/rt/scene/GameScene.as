@@ -9,9 +9,7 @@ package com.miro.rt.scene
 	import com.miro.rt.obj.TotoroState;
 	import com.miro.rt.res.ResAssets;
 	import com.miro.rt.ui.HUD;
-	import com.miro.rt.ui.Sounds;
 	
-	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
@@ -51,17 +49,17 @@ package com.miro.rt.scene
 			
 			var totoroView:* = null;
 			
-//			_box2D.visible = true;
-			totoroView = ResAssets.getAtlas().getTexture("totoro");
-			_back = new Backgroud(this);
-			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
+			_box2D.visible = true;
+//			_back = new Backgroud(this);
+//			totoroView = ResAssets.getAtlas().getTexture("totoro");
+//			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
 			
-			_totoro = new Totoro("hero", {radius:1, hurtVelocityX:5, hurtVelocityY:8, group:1, view: totoroView});
+			_totoro = new Totoro("hero", {offsetX: 25, offsetY: -22, radius:1, hurtVelocityX:5, hurtVelocityY:8, group:Config.DEPTH_MAX, view: totoroView});
 			_totoro.x = Config.HEOR_START_X * _box2D.scale;
 			_totoro.y = -10 * _box2D.scale;
 			add(_totoro);
 			
-			_rainbow = new Rainbow("hills",{rider:_totoro, sliceWidth:30, roundFactor:15, sliceHeight:78, widthHills:stage.stageWidth, registration:"topLeft", view:_rainbowDrawer});
+			_rainbow = new Rainbow("hills",{rider:_totoro, sliceWidth:30, roundFactor:15, group:Config.DEPTH_MAX, sliceHeight:800, widthHills:stage.stageWidth, registration:"topLeft", view:_rainbowDrawer});
 			add(_rainbow);
 			
 			_hud = new HUD();
@@ -69,7 +67,7 @@ package com.miro.rt.scene
 			
 			camera.allowZoom = true;
 //			camera.boundsMode= ACitrusCamera.BOUNDS_MODE_OFFSET;
-			camera.setUp(_totoro,new Rectangle(0, -_ce.screenHeight / 2, _ce.screenWidth * 10000, _ce.screenHeight), new Point(0.2, 0.5));
+			camera.setUp(_totoro,new Rectangle(0, -_ce.screenHeight * Config.RAINBOW_OFF_Y, _ce.screenWidth * 50000, _ce.screenHeight), new Point(0.2, 0.8));
 			
 			// Play screen background music.
 //			if (!Sounds.muted) Sounds.sndBgGame.play(0, 999);

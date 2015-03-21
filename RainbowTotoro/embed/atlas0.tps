@@ -189,8 +189,11 @@
         <key>fileList</key>
         <array>
             <filename>totoro.png</filename>
-            <filename>bgLayer0.png</filename>
-            <filename>bgLayer1.png</filename>
+            <filename>layer2.png</filename>
+            <filename>layer3.png</filename>
+            <filename>layer0.png</filename>
+            <filename>layer1.png</filename>
+            <filename>sky.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

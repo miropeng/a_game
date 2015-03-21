@@ -109,7 +109,7 @@ package com.miro.rt.obj  {
 				else if(_state == TotoroState.FLY)
 				{
 					var pos:b2Vec2 = _body.GetPosition();
-					var minY:int = -(_ce.screenHeight / 2 - Config.HERO_MIN_GAP) / _box2D.scale;
+					var minY:int = -(_ce.screenHeight * Config. RAINBOW_OFF_Y - Config.HERO_MIN_GAP) / _box2D.scale;
 					if(pos.y < minY)
 					{
 						pos.y = minY;

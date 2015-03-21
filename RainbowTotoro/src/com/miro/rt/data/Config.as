@@ -14,5 +14,7 @@ package com.miro.rt.data
 		public static const BACK0_MOVE_RATE:Number = 0.1;
 		public static const BACK1_MOVE_RATE:Number = 0.3;
 		public static const HERO_MIN_GAP:int = 50;
+		public static const DEPTH_MAX:int = 1000;
+		public static const RAINBOW_OFF_Y:Number = 2/ 3;
 	}
 }

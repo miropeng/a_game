@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:89067ba4f94f726eb5d8f82dada246ef:b9d991a6e35f864e8adaa70bd2c9ac77:cc52c42364d7a30b99dbf7096efb07e1$ -->
+<!-- $TexturePacker:SmartUpdate:59b2fbceb24712cd1e002940f4b53fdd:f16cf7be228d3000aece998d01d7dd25:cc52c42364d7a30b99dbf7096efb07e1$ -->
 <TextureAtlas imagePath="atlas0.png">
-    <SubTexture name="bgLayer0" x="2" y="2" width="1500" height="900"/>
-    <SubTexture name="bgLayer1" x="2" y="904" width="1500" height="129" frameX="0" frameY="-6" frameWidth="1500" frameHeight="135"/>
-    <SubTexture name="totoro" x="1504" y="2" width="125" height="109"/>
+    <SubTexture name="layer0" x="2" y="2" width="1801" height="430"/>
+    <SubTexture name="layer1" x="2" y="434" width="1801" height="383"/>
+    <SubTexture name="layer2" x="2" y="819" width="1801" height="379"/>
+    <SubTexture name="layer3" x="2" y="1922" width="1710" height="52"/>
+    <SubTexture name="sky" x="2" y="1200" width="1280" height="720"/>
+    <SubTexture name="totoro" x="1284" y="1200" width="125" height="109"/>
 </TextureAtlas>

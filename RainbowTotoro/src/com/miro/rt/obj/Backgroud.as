@@ -7,18 +7,14 @@ package com.miro.rt.obj
 	import citrus.core.starling.StarlingState;
 	import citrus.objects.CitrusSprite;
 	
+	import starling.display.Image;
 	import starling.textures.Texture;
 
 	public class Backgroud 
 	{
-		private var _backSky0:CitrusSprite;
-		private var _backSky1:CitrusSprite;
-	
-		private var _backGroud0:CitrusSprite;
-		private var _backGound1:CitrusSprite;
-		
-		private var _clipSkyIdx:int;
-		private var _clipGroundIdx:int;
+		public static const LAYER_NUM:int = 4;
+		private var _layerMap:Object;
+		private var _sky:Image;
 		private var _clipWidth:Number;
 		private var _state:StarlingState;
 		
@@ -26,25 +22,32 @@ package com.miro.rt.obj
 		{
 			_state = state;
 			
-			var backView1:Texture  = ResAssets.getAtlas().getTexture("bgLayer0");
-			_clipWidth = backView1.width - 1;
-			var clipHeight:Number = backView1.height;
-			var backY:Number = _state.stage.stageHeight - clipHeight + 10;
+			_sky = new Image(ResAssets.getAtlas().getTexture("sky"));
+			_state.addChildAt(_sky, 0);
 			
-			_backSky0 = new CitrusSprite("back1", {y:backY,parallaxX:Config.BACK0_MOVE_RATE, parallaxY:0,  width:_clipWidth,view:backView1});
-			_backSky1 = new CitrusSprite("back2", {y:backY, parallaxX:Config.BACK0_MOVE_RATE, parallaxY:0, x:_clipWidth, width:_clipWidth, view:backView1});
-			_state.add(_backSky0);
-			_state.add(_backSky1);
-			
-			var backView2:Texture  = ResAssets.getAtlas().getTexture("bgLayer1");
-			clipHeight = backView2.height;
-			backY = _state.stage.stageHeight - clipHeight + 20;
-			
-			_backGroud0 = new CitrusSprite("back3", {y:backY,parallaxX:Config.BACK1_MOVE_RATE, group:10,parallaxY:0,  width:_clipWidth,view:backView2});
-			_backGound1 = new CitrusSprite("back4", {y:backY, parallaxX:Config.BACK1_MOVE_RATE, group:10,parallaxY:0, x:_clipWidth, width:_clipWidth, view:backView2});
-			
-			_state.add(_backGroud0);
-			_state.add(_backGound1);
+			_layerMap = new Object();
+			for(var i:int = 0; i < LAYER_NUM; i++)
+			{
+				var imgs:Array = new Array();
+				for(var a:int = 0; a < 2; a++)
+				{
+					var imgView:Texture  = ResAssets.getAtlas().getTexture("layer" + i);
+					if(isNaN(_clipWidth))
+					{
+						_clipWidth = imgView.width - 1;
+					}
+					
+					var group:int = (i == LAYER_NUM - 1) ? Config.DEPTH_MAX + i : i + 10;
+					var img:CitrusSprite = new CitrusSprite("img" + i + a, 
+						{x:_clipWidth * a, y:_state.stage.stageHeight - imgView.height, parallaxX:0.1 + i * 0.2, parallaxY:0, 
+							width:_clipWidth, view:imgView, group: group});
+					
+					imgs.push(img);
+					_state.add(img);
+				}
+				
+				_layerMap["layer" + i] = {imgs: imgs, idx: 0}
+			}
 		}
 		
 		private function get state():GameManager
@@ -55,45 +58,48 @@ package com.miro.rt.obj
 		public function update(tarX:Number):void 
 		{
 			var outOfStage:Boolean = false;
-			var outOffX:Number = 100;
+			var outOffX:Number = 150;
 			
-			outOfStage = tarX * Config.BACK0_MOVE_RATE >= (_clipSkyIdx + 1) * _clipWidth + outOffX;
-			if(outOfStage)
+			for(var i:int = 0; i <LAYER_NUM; i++)
 			{
-				if(_clipSkyIdx % 2 == 0)
+				var mapObj:Object = _layerMap["layer" + i];
+				var layerImgs:Array = mapObj.imgs;
+				
+				outOfStage = tarX * layerImgs[0].parallaxX >= (mapObj.idx + 1) * _clipWidth + outOffX;
+				
+				if(outOfStage)
 				{
-					_backSky0.x = _backSky1.x + _clipWidth;
+					var h:CitrusSprite = layerImgs.shift();
+					h.x = layerImgs[length -1].x + _clipWidth;
+					layerImgs.push(h);
+					mapObj.idx++;
 				}
-				else
-				{
-					_backSky1.x = _backSky0.x + _clipWidth;
-				}
-				_clipSkyIdx++;
-			}
-			
-			outOfStage = tarX * Config.BACK1_MOVE_RATE >= (_clipGroundIdx + 1) * _clipWidth + outOffX;
-			if(outOfStage)
-			{
-				if(_clipGroundIdx % 2 == 0)
-				{
-					_backGroud0.x = _backGound1.x + _clipWidth;
-				}
-				else
-				{
-					_backGound1.x = _backGroud0.x + _clipWidth;
-				}
-				_clipGroundIdx++;
 			}
 		}
 		
 		public function destroy():void
 		{
-			_backSky0.destroy();
-			_backSky1.destroy();
 			
-			_backGroud0.destroy();
-			_backGound1.destroy();
-			
+			for(var i:int = 0; i < LAYER_NUM; i++)
+			{
+				var mapObj:Object = _layerMap["layer" + i];
+				
+				var layerImgs:Array = mapObj.imgs;
+				for(var a:int = 0; a < layerImgs.length; a++)
+				{
+					layerImgs[a].destroy();
+				}
+			}
+			if(_sky)
+			{
+				if(_sky.parent)
+				{
+					_sky.parent.removeChild(_sky);
+				}
+				_sky.dispose();
+				_sky = null;
+			}
+			_layerMap = null;
 			_state = null;
 		}
 	}
