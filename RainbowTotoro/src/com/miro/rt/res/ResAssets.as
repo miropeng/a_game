@@ -22,15 +22,6 @@ package  com.miro.rt.res
 		/**
 		 * Texture Atlas 
 		 */
-		[Embed(source="/../embed/mySpritesheet.png")]
-		public static const AtlasTextureGame0:Class;
-		
-		[Embed(source="/../embed/mySpritesheet.xml", mimeType="application/octet-stream")]
-		public static const AtlasXmlGame0:Class;
-		
-		/**
-		 * Texture Atlas 
-		 */
 		[Embed(source="/../embed/atlas0.png")]
 		public static const AtlasTextureGame:Class;
 		

@@ -194,6 +194,7 @@
             <filename>layer0.png</filename>
             <filename>layer1.png</filename>
             <filename>sky.png</filename>
+            <filename>item0.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

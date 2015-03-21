@@ -11,6 +11,9 @@ package com.miro.rt.obj
 	
 	import Box2D.Dynamics.b2Body;
 	
+	import citrus.core.CitrusEngine;
+	import citrus.physics.box2d.Box2D;
+	
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -21,25 +24,17 @@ package com.miro.rt.obj
 	 */
 	public class RainbowDrawer extends Sprite {
 		
-		[Embed(source="/../embed/g0.png")]
-		private var Ground:Class;
-		
 		private var _fullTexture:Bitmap;
-		
 		private var _groundTextures:Vector.<Texture>;
-		
 		private var _sliceWidth:uint;
 		private var _sliceHeight:uint;
-		
 		private var _images:Vector.<Image>;
-		
 		private var _flagAdded:Boolean = false;
-		
 		private var _textureIndex:int = 0;
-		private var _scale:Number;
 		
-		public function RainbowDrawer(scale:Number) {
-			_scale = scale;
+		public function RainbowDrawer() 
+		{
+			
 		}
 		
 		public function init(sliceWidth:uint, sliceHeight:uint):void {
@@ -85,9 +80,11 @@ package com.miro.rt.obj
 			addChild(image);
 			_images.push(image);
 			
+			var box2d:Box2D = CitrusEngine.getInstance().state.getFirstObjectByType(Box2D) as Box2D
+				
 			var matrix:Matrix = image.transformationMatrix;
 //			matrix.translate(body.GetPosition().x * 30, currentYPoint);  // body.GetPosition().x * _box2D.scale
-			matrix.translate(body.GetPosition().x * _scale, currentYPoint); 
+			matrix.translate(body.GetPosition().x * box2d.scale, currentYPoint); 
 			matrix.a = 1.04;
 			matrix.b = (nextYPoint - currentYPoint)  / _sliceWidth;
 			image.transformationMatrix.copyFrom(matrix); 
@@ -104,8 +101,6 @@ package com.miro.rt.obj
 		
 		public function destroy():void
 		{
-			 Ground = null;
-			
 			if(_fullTexture)
 			{
 				_fullTexture.bitmapData.dispose();

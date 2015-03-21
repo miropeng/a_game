@@ -1,5 +1,6 @@
 package com.miro.rt.scene
 {
+	import com.miro.rt.core.PatternManager;
 	import com.miro.rt.core.TouchInput;
 	import com.miro.rt.data.Config;
 	import com.miro.rt.obj.Backgroud;
@@ -47,12 +48,14 @@ package com.miro.rt.scene
 			_touchInput = new TouchInput();
 			_touchInput.initialize();
 			
+			PatternManager.instance.initialize(this);
+			
 			var totoroView:* = null;
 			
-			_box2D.visible = true;
-//			_back = new Backgroud(this);
-//			totoroView = ResAssets.getAtlas().getTexture("totoro");
-//			_rainbowDrawer = new RainbowDrawer(_box2D.scale);
+//			_box2D.visible = true;
+			_back = new Backgroud(this);
+			totoroView = ResAssets.getAtlas().getTexture("totoro");
+			_rainbowDrawer = new RainbowDrawer();
 			
 			_totoro = new Totoro("hero", {offsetX: 25, offsetY: -22, radius:1, hurtVelocityX:5, hurtVelocityY:8, group:Config.DEPTH_MAX, view: totoroView});
 			_totoro.x = Config.HEOR_START_X * _box2D.scale;
@@ -71,6 +74,7 @@ package com.miro.rt.scene
 			
 			// Play screen background music.
 //			if (!Sounds.muted) Sounds.sndBgGame.play(0, 999);
+			
 			
 		}
 //		private var _debugSprite:Sprite;
@@ -96,6 +100,8 @@ package com.miro.rt.scene
 			
 			if(_isStart)
 			{
+				PatternManager.instance.update();
+					
 				if(_hud)
 				{
 					_hud.distance = Math.round(_totoro.x / _box2D.scale);

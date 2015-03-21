@@ -1,9 +1,14 @@
 package com.miro.rt.obj 
 {
+	import com.miro.rt.event.GameEvent;
+	
+	import flash.geom.Point;
+	
 	import Box2D.Collision.Shapes.b2PolygonShape;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 	
+	import citrus.core.CitrusEngine;
 	import citrus.objects.platformer.box2d.Hills;
 
 	
@@ -11,6 +16,7 @@ package com.miro.rt.obj
 	{
 		private var _initHillPlatform:Boolean;
 		private var _amplitude:Number;
+		private var _elevation:int;
 		
 		public function Rainbow(name:String, params:Object=null)
 		{
@@ -25,11 +31,25 @@ package com.miro.rt.obj
 			super._prepareSlices();
 		}
 		
-		override protected function _pushHill():void {
+		override protected function _pushHill():void 
+		{
 			if (view)
 				(view as RainbowDrawer).createSlice(body, _nextYPoint * _box2D.scale, _currentYPoint * _box2D.scale);
 			
 			super._pushHill();
+			
+			dispatchCreateHill();
+		}
+		
+		private function dispatchCreateHill():void
+		{
+			var eDate:Object = new Object();
+			var e:GameEvent =new GameEvent(GameEvent.CREATE_HILL_CLIP, eDate);
+			
+			eDate.elevation = _elevation;
+			eDate.pos = new Point(body.GetPosition().x * _box2D.scale, _currentYPoint * _box2D.scale);
+			
+			CitrusEngine.getInstance().dispatchEvent(e);
 		}
 		
 		override protected function _deleteHill(index:uint):void {
@@ -71,12 +91,14 @@ package com.miro.rt.obj
 				}
 				
 				_realWidth += hillWidth;
+				
+				_elevation = RainbowElevation.DOWNHILL;
 			}
 			
 			
 			if (_indexSliceInCurrentHill == _slicesInCurrentHill / 2)
 			{
-				trace("top point.");
+				_elevation = RainbowElevation.UPHILL;
 			}
 			
 			// Calculate the position slice
