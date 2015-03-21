@@ -1,6 +1,7 @@
 package com.miro.rt.core  
 {
 	import com.miro.rt.scene.GameScene;
+	import com.miro.rt.scene.WelScene;
 	
 	import flash.events.EventDispatcher;
 	
@@ -25,7 +26,8 @@ package com.miro.rt.core
 		{
 			_engine = engine;
 			
-			GameManager.instance.engine.state = new GameScene();
+//			GameManager.instance.engine.state = new GameScene();
+			GameManager.instance.engine.state = new WelScene();
 		}
 		
 		public function get engine():StarlingCitrusEngine

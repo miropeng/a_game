@@ -32,6 +32,9 @@ package  com.miro.rt.res
 		[Embed(source="/../embed/clip.png")]
 		public static const RainbowClip:Class;
 		
+		[Embed(source="/../embed/back.png")]
+		public static const WelBack:Class;
+		
 		/**
 		 * Texture Cache 
 		 */

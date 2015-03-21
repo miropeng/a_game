@@ -39,7 +39,7 @@ package com.miro.rt.core
 		{
 			_state = state;
 			
-			initEvent();
+//			initEvent();
 		}
 		
 		private function initEvent():void
