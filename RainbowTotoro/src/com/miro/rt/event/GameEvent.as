@@ -5,6 +5,7 @@ package com.miro.rt.event
 	public class GameEvent extends Event
 	{
 		public static const CREATE_HILL_CLIP:String = "createHillClip";
+		public static const DELETE_HILL_CLIP:String = "deleteHillClip";
 		
 		private var _data:Object;
 

@@ -1,5 +1,6 @@
 package com.miro.rt.scene
 {
+	import com.miro.rt.core.GameManager;
 	import com.miro.rt.core.PatternManager;
 	import com.miro.rt.core.TouchInput;
 	import com.miro.rt.data.Config;
@@ -48,12 +49,10 @@ package com.miro.rt.scene
 			_touchInput = new TouchInput();
 			_touchInput.initialize();
 			
-			PatternManager.instance.initialize(this);
-			
 			var totoroView:* = null;
 			
 //			_box2D.visible = true;
-			_back = new Backgroud(this);
+			_back = new Backgroud();
 			totoroView = ResAssets.getAtlas().getTexture("totoro");
 			_rainbowDrawer = new RainbowDrawer();
 			
@@ -101,23 +100,28 @@ package com.miro.rt.scene
 			if(_isStart)
 			{
 				PatternManager.instance.update();
-					
-				if(_hud)
-				{
-					_hud.distance = Math.round(_totoro.x / _box2D.scale);
-				}
+				
 				// Set the background's x based on hero's x.
 				if(_back)
 				{
 					_back.update(_totoro.x);
 				}
 				_totoro.state = _touchInput.screenTouched ? TotoroState.ADD_V : TotoroState.FLY;
+				
+				//游戏状态
+				GameManager.instance.gameData.distance = Math.round(_totoro.x / _box2D.scale);
+				if(_hud)
+				{
+					_hud.distance = GameManager.instance.gameData.distance;
+					_hud.foodScore = GameManager.instance.gameData.score;
+				}
 			}
 			else
 			{
 				if(_touchInput.screenTouched)
 				{
 					_isStart = true;
+					PatternManager.instance.initialize();
 				}
 			}
 		}

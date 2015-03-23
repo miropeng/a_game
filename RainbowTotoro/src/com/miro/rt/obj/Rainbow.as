@@ -5,6 +5,8 @@ package com.miro.rt.obj
 	import flash.geom.Point;
 	
 	import Box2D.Collision.Shapes.b2PolygonShape;
+	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 	
@@ -34,32 +36,39 @@ package com.miro.rt.obj
 		override protected function _pushHill():void 
 		{
 			if (view)
+			{
 				(view as RainbowDrawer).createSlice(body, _nextYPoint * _box2D.scale, _currentYPoint * _box2D.scale);
+			}
 			
 			super._pushHill();
 			
-			dispatchCreateHill();
-		}
-		
-		private function dispatchCreateHill():void
-		{
-			var eDate:Object = new Object();
-			var e:GameEvent =new GameEvent(GameEvent.CREATE_HILL_CLIP, eDate);
-			
-			eDate.elevation = _elevation;
-			eDate.pos = new Point(body.GetPosition().x * _box2D.scale, _currentYPoint * _box2D.scale);
-			
-			CitrusEngine.getInstance().dispatchEvent(e);
+			var ab2V2:b2Vec2 = body.GetPosition();
+			dispatchHillChange(GameEvent.CREATE_HILL_CLIP, new Point(ab2V2.x * _box2D.scale, _currentYPoint * _box2D.scale));
 		}
 		
 		override protected function _deleteHill(index:uint):void {
 			
 			if(view)
+			{
 				(view as RainbowDrawer).deleteHill(index);
+			}
+			
+			var db2V2:b2Vec2 = (_slices[index] as b2Body).GetPosition();
+			dispatchHillChange(GameEvent.DELETE_HILL_CLIP, new Point(db2V2.x * _box2D.scale, db2V2.y * _box2D.scale));
 			
 			super._deleteHill(index);
 		}
 		
+		private function dispatchHillChange(type:String, pos:Point):void
+		{
+			var eDate:Object = new Object();
+			var event:GameEvent =new GameEvent(type, eDate);
+			
+			eDate.elevation = _elevation;
+			eDate.pos = pos;
+			
+			CitrusEngine.getInstance().dispatchEvent(event);
+		}
 		
 		override protected function _createSlice():void {
 			// Every time a new hill has to be created this algorithm predicts where the slices will be positioned

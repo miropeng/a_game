@@ -5,7 +5,7 @@ package citrus.objects.platformer.box2d {
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
-
+	
 	import citrus.objects.Box2DPhysicsObject;
 
 	/**
@@ -162,7 +162,7 @@ package citrus.objects.platformer.box2d {
 		
 		protected function _pushHill():void {		
 			_slicesCreated++;
-			_indexSliceInCurrentHill++;		
+			_indexSliceInCurrentHill++;
 			_slices.push(_body);
 		}
 		

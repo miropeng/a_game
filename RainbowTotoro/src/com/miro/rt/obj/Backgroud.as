@@ -4,6 +4,7 @@ package com.miro.rt.obj
 	import com.miro.rt.data.Config;
 	import com.miro.rt.res.ResAssets;
 	
+	import citrus.core.CitrusEngine;
 	import citrus.core.starling.StarlingState;
 	import citrus.objects.CitrusSprite;
 	
@@ -18,9 +19,9 @@ package com.miro.rt.obj
 		private var _clipWidth:Number;
 		private var _state:StarlingState;
 		
-		public function Backgroud(state:StarlingState)
+		public function Backgroud()
 		{
-			_state = state;
+			_state = CitrusEngine.getInstance().state as StarlingState;
 			
 			_sky = new Image(ResAssets.getAtlas().getTexture("sky"));
 			_state.addChildAt(_sky, 0);
