@@ -4,6 +4,7 @@ package com.miro.rt.core
 	import com.miro.rt.obj.Item;
 	import com.miro.rt.obj.RainbowElevation;
 	import com.miro.rt.obj.Totoro;
+	import com.miro.rt.ui.Sounds;
 	
 	import flash.geom.Point;
 	
@@ -66,6 +67,10 @@ package com.miro.rt.core
 			{
 				doingCreatCoin(pos);
 			}
+			else if(_createType == ItemType.DAMOND)
+			{
+				doingCreatDamond(pos);
+			}
 		}
 		
 		private function rdmState():void
@@ -76,9 +81,10 @@ package com.miro.rt.core
 				_createType = ItemType.COIN;
 				_createHelpObj = {creating:false, changeElevationNum: 0, creatingFrequency: 1};
 			}
-			else if(stateRdm >= 0.2 && stateRdm < 0.4)
+			else if(stateRdm >= 0.05 && stateRdm < 0.06)
 			{
-				
+				_createType = ItemType.DAMOND;
+				_createHelpObj = {creating:false, creatingCount: 0, creatingFrequency: 1};
 			}
 		}
 		
@@ -119,6 +125,36 @@ package com.miro.rt.core
 			}
 		}
 		
+		private function doingCreatDamond(pos:Point):void
+		{
+			if(!_createHelpObj.creating)
+			{
+				_createHelpObj.creating = true;
+			}
+			else
+			{
+				_createHelpObj.creatingFrequency++;
+				
+				if(_createHelpObj.creatingFrequency == 3)
+				{
+					_createHelpObj.creatingFrequency = 0;
+					
+					//创建道具
+					var item:Item = _itemCreater.create(ItemType.DAMOND, pos);
+					_displays.push(item);
+					
+					//判断结束
+					_createHelpObj.creatingCount++;
+					
+					if(_createHelpObj.creatingCount == 5)
+					{
+						_createHelpObj.creating = false;
+						_createType = ItemType.NULL;
+					}
+				}
+			}
+		}
+		
 		private function checkDeleteItem():void
 		{
 			for (var i:int = 0; i < _displays.length; i++) 
@@ -150,7 +186,18 @@ package com.miro.rt.core
 				heroItem_sqDist = heroItem_xDist * heroItem_xDist + heroItem_yDist * heroItem_yDist;
 				if (heroItem_sqDist < 5000)
 				{
-					GameManager.instance.gameData.score++;
+					var score:int = 0;
+					if(item.itemType == ItemType.COIN)
+					{
+						score = 1;
+					}
+					else if(item.itemType == ItemType.DAMOND)
+					{
+						score = 10;
+					}
+					
+					GameManager.instance.gameData.score += score;
+					if (!Sounds.muted) Sounds.sndEat.play();
 					
 					_displays.splice(i, 1);
 					_itemCreater.recycle(item);

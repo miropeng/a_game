@@ -35,16 +35,7 @@ package com.miro.rt.core
 				}
 			}
 			
-			if(!item)
-			{
-				item = createImp(type, pos);
-			}
-			
-			if(pos)
-			{
-				item.x = pos.x;
-				item.y = pos.y - item.view.height / 2;
-			}
+			item = createImp(item, type, pos);
 			
 			return item;
 		}
@@ -57,19 +48,39 @@ package com.miro.rt.core
 			_pool.push(item);
 		}
 		
-		private function createImp(type:int, pos:Point):Item
+		private function createImp(srcItem:Item, type:int, pos:Point):Item
 		{
 			var item:Item;
 			
+			if(!srcItem)
+			{
+				var itemView:Texture = ResAssets.getAtlas().getTexture("item" + type);
+				item = new Item("item", {group: Config.DEPTH_MAX, offsetX: -itemView.width / 2, offsetY: -itemView.height / 2, view: itemView});
+				item.itemType = type;
+				
+				CitrusEngine.getInstance().state.add(item);
+			}
+			else
+			{
+				item = srcItem;
+			}
+
 			if(type == ItemType.COIN)
 			{
-				var itemView:Texture = ResAssets.getAtlas().getTexture("item0");
-				
-				item = new Item("itemCoin", {group: Config.DEPTH_MAX, offsetX: -itemView.width / 2, offsetY: -itemView.height / 2, view: itemView});
-				item.itemType = type;
+				if(pos)
+				{
+					item.x = pos.x;
+					item.y = pos.y - item.view.height / 2;
+				}
 			}
-			
-			CitrusEngine.getInstance().state.add(item);
+			else if(type == ItemType.DAMOND)
+			{
+				if(pos)
+				{
+					item.x = pos.x;
+					item.y = -(CitrusEngine.getInstance().screenHeight * Config. RAINBOW_OFF_Y - Config.HERO_MIN_GAP);
+				}
+			}
 			
 			return item;
 		}

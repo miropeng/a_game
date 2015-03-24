@@ -11,6 +11,7 @@ package com.miro.rt.scene
 	import com.miro.rt.obj.TotoroState;
 	import com.miro.rt.res.ResAssets;
 	import com.miro.rt.ui.HUD;
+	import com.miro.rt.ui.Sounds;
 	
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -56,7 +57,7 @@ package com.miro.rt.scene
 			totoroView = ResAssets.getAtlas().getTexture("totoro");
 			_rainbowDrawer = new RainbowDrawer();
 			
-			_totoro = new Totoro("hero", {offsetX: 25, offsetY: -22, radius:1, hurtVelocityX:5, hurtVelocityY:8, group:Config.DEPTH_MAX, view: totoroView});
+			_totoro = new Totoro("hero", {offsetX:34, offsetY: -32, radius:2, hurtVelocityX:5, hurtVelocityY:8, group:Config.DEPTH_MAX, view: totoroView});
 			_totoro.x = Config.HEOR_START_X * _box2D.scale;
 			_totoro.y = -10 * _box2D.scale;
 			add(_totoro);
@@ -68,13 +69,10 @@ package com.miro.rt.scene
 			addChild(_hud);
 			
 			camera.allowZoom = true;
-//			camera.boundsMode= ACitrusCamera.BOUNDS_MODE_OFFSET;
 			camera.setUp(_totoro,new Rectangle(0, -_ce.screenHeight * Config.RAINBOW_OFF_Y, _ce.screenWidth * 50000, _ce.screenHeight), new Point(0.2, 0.8));
 			
 			// Play screen background music.
-//			if (!Sounds.muted) Sounds.sndBgGame.play(0, 999);
-			
-			
+			if (!Sounds.muted) Sounds.sndBgGame.play(0, 999);
 		}
 //		private var _debugSprite:Sprite;
 		override public function update(timeDelta:Number):void

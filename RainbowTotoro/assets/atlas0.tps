@@ -38,7 +38,7 @@
         <key>dataFormat</key>
         <string>sparrow</string>
         <key>textureFileName</key>
-        <filename>atlas0.png</filename>
+        <filename>../embed/atlas0.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -145,7 +145,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>atlas0.xml</filename>
+                <filename>../embed/atlas0.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -196,6 +196,8 @@
             <filename>item0.png</filename>
             <filename>playbtn.png</filename>
             <filename>totoro.png</filename>
+            <filename>item1.png</filename>
+            <filename>help_touch.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
