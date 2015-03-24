@@ -1,33 +1,30 @@
 package com.miro.rt.core
 {
-	import com.miro.rt.data.Config;
 	import com.miro.rt.event.GameEvent;
+	import com.miro.rt.obj.Item;
 	import com.miro.rt.obj.RainbowElevation;
-	import com.miro.rt.res.ResAssets;
+	import com.miro.rt.obj.Totoro;
 	
 	import flash.geom.Point;
 	
 	import citrus.core.CitrusEngine;
-	import citrus.core.starling.StarlingState;
-	import citrus.objects.CitrusSprite;
-	
-	import starling.textures.Texture;
+	import citrus.core.IState;
+	import citrus.objects.Box2DPhysicsObject;
 
 	public class PatternManager
 	{
-		private static const CREATESTATE_NULL:int = -1;
-		private static const CREATESTATE_COIN:int = 0;
-		
-		private var _state:StarlingState;
 		private var _elevation:int = -1;
 		private var _changeElevation:Boolean;
-		private var _createState:int = -1;
+		private var _createType:int = -1;
 		private var _createHelpObj:Object;
+		private var _itemCreater:ItemCreater;
 		private static var _instance:PatternManager;
+		private var _state:IState;
+		private var _displays:Vector.<Item>;
+		private var _rider:Box2DPhysicsObject;
 		
 		public function PatternManager()
 		{
-			
 		}
 		
 		public static function get instance():PatternManager
@@ -35,11 +32,16 @@ package com.miro.rt.core
 			return _instance ||= new PatternManager();
 		}
 		
-		public function initialize(state:StarlingState):void
+		public function initialize():void
 		{
-			_state = state;
-			
-//			initEvent();
+			_itemCreater = new ItemCreater();
+			_state = CitrusEngine.getInstance().state;
+			_displays = new Vector.<Item>();
+			if(!_rider)
+			{
+				_rider = _state.getFirstObjectByType(Totoro) as Totoro;
+			}
+			initEvent();
 		}
 		
 		private function initEvent():void
@@ -51,57 +53,120 @@ package com.miro.rt.core
 		{
 			var pos:Point = e.data.pos as Point;
 			var elevation:int = e.data.elevation;
-				
+			
 			_changeElevation = _elevation != elevation;
 			_elevation = elevation;
 			
-			if(_createState != CREATESTATE_COIN)
+			if(_createType == ItemType.NULL)
 			{
-				if(_elevation == RainbowElevation.DOWNHILL)
+				rdmState();
+			}
+			
+			if(_createType == ItemType.COIN)
+			{
+				doingCreatCoin(pos);
+			}
+		}
+		
+		private function rdmState():void
+		{
+			var stateRdm:Number = Math.random();
+			if(stateRdm < 0.05)
+			{
+				_createType = ItemType.COIN;
+				_createHelpObj = {creating:false, changeElevationNum: 0, creatingFrequency: 1};
+			}
+			else if(stateRdm >= 0.2 && stateRdm < 0.4)
+			{
+				
+			}
+		}
+		
+		private function doingCreatCoin(pos:Point):void
+		{
+			if(!_createHelpObj.creating)
+			{
+				//判断开始
+				if(_changeElevation && _elevation == RainbowElevation.DOWNHILL)
 				{
-					_createState = CREATESTATE_COIN;
-					_createHelpObj = {changeElevationNum: 0};
+					_createHelpObj.creating = true;
 				}
 			}
 			else
 			{
+				_createHelpObj.creatingFrequency++;
 				
-			}
+				if(_createHelpObj.creatingFrequency == 3)
+				{
+					_createHelpObj.creatingFrequency = 0;
+					
+					//创建道具
+					var item:Item = _itemCreater.create(ItemType.COIN, pos);
+					_displays.push(item);
+					
+				}
 				
-			if(_createState == CREATESTATE_COIN)
-			{
+				//判断结束
 				if(_changeElevation)
 				{
 					_createHelpObj.changeElevationNum++;
 				}
-				
 				if(_createHelpObj.changeElevationNum == 2)
 				{
-					_createState = CREATESTATE_NULL;
+					_createHelpObj.creating = false;
+					_createType = ItemType.NULL;
 				}
-			}
-			
-			
-			if(_createState == CREATESTATE_COIN)
-			{
-				createCoin(pos);
 			}
 		}
 		
-		private function createCoin(pos:Point):void
+		private function checkDeleteItem():void
 		{
-			var itemView:Texture = ResAssets.getAtlas().getTexture("item0");
-			var item:CitrusSprite = new CitrusSprite("item0", {group: Config.DEPTH_MAX, offsetX: -itemView.width / 2, offsetY: -itemView.height / 2, view: itemView});
-			item.x = pos.x;
-			item.y = pos.y - itemView.height / 2;
+			for (var i:int = 0; i < _displays.length; i++) 
+			{
+				var item:Item = _displays[i];
+				if (_rider.x - item.x > CitrusEngine.getInstance().screenWidth / 2) 
+				{
+					_displays.splice(i, 1);
+					_itemCreater.recycle(item);
+					
+					i--;
+				}
+			}
+		}
+		
+		public function checkEatItem():void
+		{
+			var heroItem_xDist:Number;
+			var heroItem_yDist:Number;
+			var heroItem_sqDist:Number;
+			var item:Item;
 			
-			_state.add(item);
-			
+			for (var i:int = 0; i < _displays.length; i++) 
+			{
+				item = _displays[i];
+				
+				heroItem_xDist = item.x - _rider.x;
+				heroItem_yDist = item.y - _rider.y;
+				heroItem_sqDist = heroItem_xDist * heroItem_xDist + heroItem_yDist * heroItem_yDist;
+				if (heroItem_sqDist < 5000)
+				{
+					GameManager.instance.gameData.score++;
+					
+					_displays.splice(i, 1);
+					_itemCreater.recycle(item);
+					
+					i--;
+				}
+			}
 		}
 		
 		public function update():void
 		{
+			checkDeleteItem();
+			checkEatItem();
 			
+			trace(_displays.length, _itemCreater.poolLength);
 		}
 	}
 }
+
