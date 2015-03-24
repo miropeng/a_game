@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:3044eaf6ef9c7355c30f401f088cca0f:0f0cb1149589367fbde2d4618d73b5a3:cc52c42364d7a30b99dbf7096efb07e1$ -->
+<!-- $TexturePacker:SmartUpdate:93d48c9240a76316fdbb40001b4510a5:c3e0c216de742f6336dda297c5abc707:cc52c42364d7a30b99dbf7096efb07e1$ -->
 <TextureAtlas imagePath="atlas0.png">
     <SubTexture name="item0" x="1714" y="1200" width="46" height="45"/>
     <SubTexture name="layer0" x="2" y="2" width="1801" height="430"/>
@@ -9,5 +9,5 @@
     <SubTexture name="layer3" x="2" y="1922" width="1710" height="52"/>
     <SubTexture name="playbtn" x="1284" y="1200" width="320" height="87"/>
     <SubTexture name="sky" x="2" y="1200" width="1280" height="720"/>
-    <SubTexture name="totoro" x="1606" y="1247" width="125" height="109"/>
+    <SubTexture name="totoro" x="1284" y="1289" width="206" height="183"/>
 </TextureAtlas>

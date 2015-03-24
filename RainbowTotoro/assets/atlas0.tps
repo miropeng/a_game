@@ -188,7 +188,6 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>totoro.png</filename>
             <filename>layer2.png</filename>
             <filename>layer3.png</filename>
             <filename>layer0.png</filename>
@@ -196,6 +195,7 @@
             <filename>sky.png</filename>
             <filename>item0.png</filename>
             <filename>playbtn.png</filename>
+            <filename>totoro.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
