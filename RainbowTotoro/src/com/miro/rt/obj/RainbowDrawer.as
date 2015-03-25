@@ -28,7 +28,8 @@ package com.miro.rt.obj
 		private var _groundTextures:Vector.<Texture>;
 		private var _sliceWidth:uint;
 		private var _sliceHeight:uint;
-		private var _images:Vector.<Image>;
+		private var _imagePool:Vector.<Image>;
+		private var _displayImages:Vector.<Image>;
 		private var _flagAdded:Boolean = false;
 		private var _textureIndex:int = 0;
 		
@@ -47,14 +48,15 @@ package com.miro.rt.obj
 			_fullTexture = new ResAssets.RainbowClip() as Bitmap;
 			var bd:BitmapData = _fullTexture.bitmapData;
 			
+			_displayImages = new Vector.<Image>();
+			_imagePool = new Vector.<Image>();
+			
 			for (var i:uint = 0; i < 10; i++)
 			{
 				var draw:BitmapData = new BitmapData(_sliceWidth, sliceHeight, false, 0x000000);
 				draw.copyPixels(bd, new Rectangle(i*_sliceWidth, 0, _sliceWidth, sliceHeight), new Point(0,0));
 				_groundTextures.push(Texture.fromBitmapData(draw, true, true));	
 			}
-			
-			_images = new Vector.<Image>();
 			
 			addEventListener(Event.ADDED, _added);
 		}
@@ -76,9 +78,9 @@ package com.miro.rt.obj
 		
 		public function createSlice(body:b2Body, nextYPoint:Number, currentYPoint:Number):void 
 		{
-			var image:Image = new Image(_groundTextures[_textureIndex]);
+			var image:Image = createImage(_groundTextures[_textureIndex]);
 			addChild(image);
-			_images.push(image);
+			_displayImages.push(image);
 			
 			var box2d:Box2D = CitrusEngine.getInstance().state.getFirstObjectByType(Box2D) as Box2D
 				
@@ -93,10 +95,31 @@ package com.miro.rt.obj
 			
 		}
 		
+		private function createImage(texture:Texture):Image
+		{
+			var ret:Image = _imagePool.pop();
+			if(!ret)
+			{
+				ret = new Image(texture);
+			}
+			else
+			{
+//				flash.geom.Matrix.Matrix(a:Number=1, b:Number=0, c:Number=0, d:Number=1, tx:Number=0, ty:Number=0)
+				ret.transformationMatrix.a = 1;
+				ret.transformationMatrix.b = 0;
+				ret.transformationMatrix.c = 0;
+				ret.transformationMatrix.d = 1;
+				ret.transformationMatrix.tx = 0;
+				ret.transformationMatrix.ty = 0;
+				ret.texture = texture;
+			}
+			return ret;
+		}
+		
 		public function deleteHill(index:uint):void {
-			removeChild(_images[index], true);
-			_images[index] = null;
-			_images.splice(index, 1);
+			removeChild(_displayImages[index]);
+			var img:Image = _displayImages.splice(index, 1)[0];
+			_imagePool.push(img);
 		}
 		
 		public function destroy():void
@@ -113,11 +136,16 @@ package com.miro.rt.obj
 			}
 			_groundTextures = null;
 			
-			for each(var i:Image in _images)
+			for each(var i:Image in _imagePool)
 			{
 				i.dispose();
 			}
-			_images = null;
+			for each(i in _displayImages)
+			{
+				i.dispose();
+			}
+			_imagePool = null;
+			_displayImages = null;
 		}
 	}
 }

@@ -30,7 +30,7 @@ package com.miro.rt.core
 			{
 				if(_pool[i].itemType == type)
 				{
-					item = _pool.splice(i, 1)[0];;
+					item = _pool.splice(i, 1)[0];
 					break;
 				}
 			}

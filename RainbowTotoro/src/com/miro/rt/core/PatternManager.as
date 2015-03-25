@@ -212,7 +212,7 @@ package com.miro.rt.core
 			checkDeleteItem();
 			checkEatItem();
 			
-			trace(_displays.length, _itemCreater.poolLength);
+//			trace(_displays.length, _itemCreater.poolLength);
 		}
 	}
 }
