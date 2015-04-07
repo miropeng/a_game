@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:9ec7daf530d42a5ec51d727b721eea55:fa1204ecc2d9d5e2395c8d66dcfab2c2:cc52c42364d7a30b99dbf7096efb07e1$ -->
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:132722bebc37dc89594ad1534af7338b$ -->
 <TextureAtlas imagePath="atlas0.png">
-    <SubTexture name="help_touch" x="1490" y="1289" width="116" height="156" frameX="0" frameY="0" frameWidth="116" frameHeight="157"/>
-    <SubTexture name="item0" x="1714" y="1200" width="46" height="45"/>
-    <SubTexture name="item1" x="1714" y="1247" width="44" height="40" frameX="0" frameY="0" frameWidth="45" frameHeight="40"/>
+    <SubTexture name="help_touch" x="1490" y="1289" width="116" height="157"/>
+    <SubTexture name="item0" x="1714" y="1251" width="46" height="45"/>
+    <SubTexture name="item00" x="1762" y="1251" width="40" height="47"/>
+    <SubTexture name="item01" x="1761" y="1300" width="42" height="66"/>
+    <SubTexture name="item02" x="1767" y="1200" width="36" height="46"/>
+    <SubTexture name="item03" x="1714" y="1200" width="51" height="49"/>
+    <SubTexture name="item04" x="1714" y="1340" width="39" height="39"/>
+    <SubTexture name="item1" x="1714" y="1298" width="45" height="40"/>
     <SubTexture name="layer0" x="2" y="2" width="1801" height="430"/>
     <SubTexture name="layer1" x="2" y="434" width="1801" height="383"/>
     <SubTexture name="layer2" x="2" y="819" width="1801" height="379"/>

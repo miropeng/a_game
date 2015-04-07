@@ -1,5 +1,6 @@
 package com.miro.rt.core
 {
+	import com.miro.rt.data.PatternPath;
 	import com.miro.rt.event.GameEvent;
 	import com.miro.rt.obj.Item;
 	import com.miro.rt.obj.RainbowElevation;
@@ -11,6 +12,7 @@ package com.miro.rt.core
 	import citrus.core.CitrusEngine;
 	import citrus.core.IState;
 	import citrus.objects.Box2DPhysicsObject;
+	import citrus.physics.box2d.Box2D;
 
 	public class PatternManager
 	{
@@ -23,6 +25,7 @@ package com.miro.rt.core
 		private var _state:IState;
 		private var _displays:Vector.<Item>;
 		private var _rider:Box2DPhysicsObject;
+		private var _box2D:Box2D;
 		
 		public function PatternManager()
 		{
@@ -42,6 +45,7 @@ package com.miro.rt.core
 			{
 				_rider = _state.getFirstObjectByType(Totoro) as Totoro;
 			}
+			_box2D = _state.getFirstObjectByType(Box2D) as Box2D;
 			initEvent();
 		}
 		
@@ -71,20 +75,29 @@ package com.miro.rt.core
 			{
 				doingCreatDamond(pos);
 			}
+			else if(_createType == ItemType.HEART)
+			{
+				doingCreatHeart(pos);
+			}
 		}
 		
 		private function rdmState():void
 		{
 			var stateRdm:Number = Math.random();
-			if(stateRdm < 0.05)
+			if(stateRdm < 0.01)
 			{
 				_createType = ItemType.COIN;
 				_createHelpObj = {creating:false, changeElevationNum: 0, creatingFrequency: 1};
 			}
-			else if(stateRdm >= 0.05 && stateRdm < 0.06)
+			else if(stateRdm >= 0.01 && stateRdm < 0.02)
 			{
 				_createType = ItemType.DAMOND;
 				_createHelpObj = {creating:false, creatingCount: 0, creatingFrequency: 1};
+			}
+			else if(stateRdm >= 0.02 && stateRdm < 0.022)
+			{
+				_createType = ItemType.HEART;
+				_createHelpObj = {creating:false, startPos: null};
 			}
 		}
 		
@@ -107,7 +120,7 @@ package com.miro.rt.core
 					_createHelpObj.creatingFrequency = 0;
 					
 					//创建道具
-					var item:Item = _itemCreater.create(ItemType.COIN, pos);
+					var item:Item = _itemCreater.create(ItemType.COIN, pos.x, pos.y);
 					_displays.push(item);
 					
 				}
@@ -140,7 +153,7 @@ package com.miro.rt.core
 					_createHelpObj.creatingFrequency = 0;
 					
 					//创建道具
-					var item:Item = _itemCreater.create(ItemType.DAMOND, pos);
+					var item:Item = _itemCreater.create(ItemType.DAMOND, pos.x, pos.y);
 					_displays.push(item);
 					
 					//判断结束
@@ -151,6 +164,46 @@ package com.miro.rt.core
 						_createHelpObj.creating = false;
 						_createType = ItemType.NULL;
 					}
+				}
+			}
+		}
+		
+		private function doingCreatHeart(pos:Point):void
+		{
+			if(!_createHelpObj.creating)
+			{
+				_createHelpObj.creating = true;
+				if(null == _createHelpObj.startPos)
+				{
+					_createHelpObj.startPos = pos;//记录初始生成位置。
+				}
+				
+				for(var i:int = 0; i < PatternPath.heartPos.length; i++)
+				{
+					//创建道具
+					var px:int = _box2D.scale * PatternPath.heartPos[i][0] + _createHelpObj.startPos.x;
+					var py:int = _box2D.scale * PatternPath.heartPos[i][1];
+					var item:Item = _itemCreater.create(ItemType.HEART, px, py);
+					
+					_displays.push(item);
+				}
+			}
+			else
+			{
+				var outOfX:Boolean = true;
+				for(i = 0; i < PatternPath.heartPos.length; i++)
+				{
+					if(pos.x <= _box2D.scale * PatternPath.heartPos[i][0] + _createHelpObj.startPos.x + 100)
+					{
+						outOfX = false;
+						break;
+					}
+				}
+				
+				if(outOfX)
+				{
+					_createHelpObj.creating = false;
+					_createType = ItemType.NULL;
 				}
 			}
 		}

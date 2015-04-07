@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1280" minHeight="720" width="1280" height="720" creationComplete="onCreated(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			private var _panel:EditorPanel;
+			
+			protected function onCreated(event:FlexEvent):void
+			{
+				this.addEventListener(Event.ADDED_TO_STAGE, __onAddToStage);
+			}
+			
+			private function __onAddToStage(e:Event):void
+			{
+				this.removeEventListener(Event.ADDED_TO_STAGE, __onAddToStage);
+				
+				EditorConfig.stage = stage;
+				_panel = new EditorPanel();
+				EditorConfig.stage.addChild(_panel);
+			}
+			
+			protected function onClickPrint(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				_panel.print();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+		<s:Button label="打印" x="100" y="600" click="onClickPrint(event)">
+			
+		</s:Button>
+</s:Application>
